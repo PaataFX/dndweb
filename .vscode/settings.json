@@ -1,0 +1,12 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 100,
+            "driver": "SQLite",
+            "name": "dnd",
+            "group": "dnd",
+            "database": "${workspaceFolder:dnd}/dndweb/db.sqlite3"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

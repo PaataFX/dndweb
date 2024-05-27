@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Armor List</title>
+    <style>
+        body {
+            width: 960px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        table {
+            width: 95%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 5px 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            padding: 10px 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>აბჯრის სია</h1>
+
+    <!-- Light Armor Table -->
+    {% if light_armors %}
+    <h2>მსუბუქი აბჯარი</h2>
+    <table>
+        <tr>
+            <th>სახელი</th>
+            <th>აბჯრის კლასი (AC)</th>
+            <th>საჭირო სიძლიერე</th>
+            <th>მინუსი დამალვისას</th>
+            <th>წონა</th>
+            <th>ფასი (ოქროში)</th>
+        </tr>
+        {% for armor in light_armors %}
+        <tr>
+            <td>{{ armor.name }}</td>
+            <td>{{ armor.armor_class }}{% if armor.plus_dex_modifier %} + DEX{% endif %}{% if armor.plus_dex_modifier_max_2 %} + DEX (Max 2){% endif %}</td>
+            {% if armor.strength_requirement is not none %}
+                <td>{{ armor.strength_requirement }}</td>
+            {% else %}
+                <td>-</td>
+            {% endif %}
+            <td>{% if armor.stealth_disadvantage %}მინუსით{% else %}-{% endif %}</td>
+            <td>{{ armor.weight }} კგ</td>
+            <td>{{ armor.cost_in_gold }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <!-- Medium Armor Table -->
+    {% if medium_armors %}
+    <h2>საშუალო აბჯარი</h2>
+    <table>
+        <tr>
+            <th>სახელი</th>
+            <th>აბჯრის კლასი (AC)</th>
+            <th>საჭირო სიძლიერე</th>
+            <th>მინუსი დამალვისას</th>
+            <th>წონა</th>
+            <th>ფასი (ოქროში)</th>
+        </tr>
+        {% for armor in medium_armors %}
+        <tr>
+            <td>{{ armor.name }}</td>
+            <td>{{ armor.armor_class }}{% if armor.plus_dex_modifier %} + DEX{% endif %}{% if armor.plus_dex_modifier_max_2 %} + DEX (Max 2){% endif %}</td>
+            {% if armor.strength_requirement is not none %}
+                <td>{{ armor.strength_requirement }}</td>
+            {% else %}
+                <td>-</td>
+            {% endif %}
+            <td>{% if armor.stealth_disadvantage %}მინუსით{% else %}-{% endif %}</td>
+            <td>{{ armor.weight }} კგ</td>
+            <td>{{ armor.cost_in_gold }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <!-- Heavy Armor Table -->
+    {% if heavy_armors %}
+    <h2>მძიმე აბჯარი</h2>
+    <table>
+        <tr>
+            <th>სახელი</th>
+            <th>აბჯრის კლასი (AC)</th>
+            <th>საჭირო სიძლიერე</th>
+            <th>მინუსი დამალვისას</th>
+            <th>წონა</th>
+            <th>ფასი (ოქროში)</th>
+        </tr>
+        {% for armor in heavy_armors %}
+        <tr>
+            <td>{{ armor.name }}</td>
+            <td>{{ armor.armor_class }}{% if armor.plus_dex_modifier %} + DEX{% endif %}{% if armor.plus_dex_modifier_max_2 %} + DEX (Max 2){% endif %}</td>
+            {% if armor.strength_requirement is not none %}
+                <td>{{ armor.strength_requirement }}</td>
+            {% else %}
+                <td>-</td>
+            {% endif %}
+            <td>{% if armor.stealth_disadvantage %}მინუსით{% else %}-{% endif %}</td>
+            <td>{{ armor.weight }} კგ</td>
+            <td>{{ armor.cost_in_gold }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <!-- No Weight Class Armor Table -->
+    {% if no_weight_class_armors %}
+    <h2>No Weight Class Armor</h2>
+    <table>
+        <tr>
+            <th>სახელი</th>
+            <th>აბჯრის კლასი (AC)</th>
+            <th>საჭირო სიძლიერე</th>
+            <th>მინუსი დამალვისას</th>
+            <th>წონა</th>
+            <th>ფასი (ოქროში)</th>
+        </tr>
+        {% for armor in no_weight_class_armors %}
+        <tr>
+            <td>{{ armor.name }}</td>
+            <td>{{ armor.armor_class }}{% if armor.plus_dex_modifier %} + DEX{% endif %}{% if armor.plus_dex_modifier_max_2 %} + DEX (Max 2){% endif %}</td>
+            {% if armor.strength_requirement is not none %}
+                <td>{{ armor.strength_requirement }}</td>
+            {% else %}
+                <td>-</td>
+            {% endif %}
+            <td>{% if armor.stealth_disadvantage %}მინუსით{% else %}-{% endif %}</td>
+            <td>{{ armor.weight }} კგ</td>
+            <td>{{ armor.cost_in_gold }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</body>
+</html>
