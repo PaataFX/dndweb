@@ -127,33 +127,6 @@ class SavingThrow(models.Model):
     def __str__(self):
         return self.name
 
-class Class(models.Model):
-    name = models.CharField(max_length=50)
-    description = models.TextField()
-    hit_die = models.ForeignKey(Dice, on_delete=models.CASCADE)
-    saving_throw_proficiencies = models.ManyToManyField('SavingThrow')
-    armor_proficiencies = models.ManyToManyField('Armor', blank=True)
-    weapon_proficiencies = models.ManyToManyField('Weapon', blank=True)
-    tool_proficiencies = models.ManyToManyField('Tool', blank=True)
-    skill_proficiencies = models.ManyToManyField('Skill')
-    weapon_groups = models.ManyToManyField('WeaponGroup', blank=True)
-    armor_groups = models.ManyToManyField('ArmorGroup', blank=True)
-    equipment = models.ManyToManyField('Equipment', blank=True)
-    spellcasting_ability = models.ForeignKey('AbilityScore', on_delete=models.CASCADE, null=True, blank=True, related_name='spellcasting_ability_for')
-    traits = models.ManyToManyField('Trait', blank=True)
-
-    def __str__(self):
-        return self.name
-
-class Subclass(models.Model):
-    name = models.CharField(max_length=50)
-    description = models.TextField()
-    dnd_class = models.ForeignKey(Class, on_delete=models.CASCADE, related_name='subclasses')
-    powers_description = models.TextField(blank=True)
-
-    def __str__(self):
-        return self.name
-
 class Spell(models.Model):
     name = models.CharField(max_length=100)
     level = models.IntegerField()
@@ -324,7 +297,59 @@ class EquipmentOption(models.Model):
 
 class Equipment(models.Model):
     name = models.CharField(max_length=100)
-    equipment_option = models.ForeignKey('EquipmentOption', on_delete=models.CASCADE, related_name='equipments', blank=True, null=True)
+    weapon1 = models.ForeignKey('Weapon', related_name='equipments1', on_delete=models.SET_NULL, null=True, blank=True)
+    weapon2 = models.ForeignKey('Weapon', related_name='equipments2', on_delete=models.SET_NULL, null=True, blank=True)
+    weapon3 = models.ForeignKey('Weapon', related_name='equipments3', on_delete=models.SET_NULL, null=True, blank=True)
+
+    weapon_group1 = models.ForeignKey('WeaponGroup', related_name='equipments1', on_delete=models.SET_NULL, null=True, blank=True)
+    weapon_group2 = models.ForeignKey('WeaponGroup', related_name='equipments2', on_delete=models.SET_NULL, null=True, blank=True)
+    weapon_group3 = models.ForeignKey('WeaponGroup', related_name='equipments3', on_delete=models.SET_NULL, null=True, blank=True)
+
+    armor1 = models.ForeignKey('Armor', related_name='equipments1', on_delete=models.SET_NULL, null=True, blank=True)
+    armor2 = models.ForeignKey('Armor', related_name='equipments2', on_delete=models.SET_NULL, null=True, blank=True)
+    armor3 = models.ForeignKey('Armor', related_name='equipments3', on_delete=models.SET_NULL, null=True, blank=True)
+
+    armor_group1 = models.ForeignKey('ArmorGroup', related_name='equipments1', on_delete=models.SET_NULL, null=True, blank=True)
+    armor_group2 = models.ForeignKey('ArmorGroup', related_name='equipments2', on_delete=models.SET_NULL, null=True, blank=True)
+    armor_group3 = models.ForeignKey('ArmorGroup', related_name='equipments3', on_delete=models.SET_NULL, null=True, blank=True)
+
+    tool1 = models.ForeignKey('Tool', related_name='equipments1', on_delete=models.SET_NULL, null=True, blank=True)
+    tool2 = models.ForeignKey('Tool', related_name='equipments2', on_delete=models.SET_NULL, null=True, blank=True)
+    tool3 = models.ForeignKey('Tool', related_name='equipments3', on_delete=models.SET_NULL, null=True, blank=True)
+
+    equipment_option1 = models.ForeignKey('EquipmentOption', related_name='equipments1', on_delete=models.SET_NULL, null=True, blank=True)
+    equipment_option2 = models.ForeignKey('EquipmentOption', related_name='equipments2', on_delete=models.SET_NULL, null=True, blank=True)
+    equipment_option3 = models.ForeignKey('EquipmentOption', related_name='equipments3', on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+class Class(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField()
+    hit_die = models.ForeignKey(Dice, on_delete=models.CASCADE)
+    hit_points_at_first_level = models.CharField(max_length=50, null=True, blank=True)
+    hit_points_at_higher_levels = models.CharField(max_length=50, null=True, blank=True)
+    saving_throw_proficiencies = models.ManyToManyField('SavingThrow')
+    armor_proficiencies = models.ManyToManyField('Armor', blank=True)
+    weapon_proficiencies = models.ManyToManyField('Weapon', blank=True)
+    tool_proficiencies = models.ManyToManyField('Tool', blank=True)
+    skill_proficiencies = models.ManyToManyField('Skill')
+    weapon_groups = models.ManyToManyField('WeaponGroup', blank=True)
+    armor_groups = models.ManyToManyField('ArmorGroup', blank=True)
+    equipment = models.ManyToManyField('Equipment', blank=True)
+    spellcasting_ability = models.ForeignKey('AbilityScore', on_delete=models.CASCADE, null=True, blank=True, related_name='spellcasting_ability_for')
+    traits = models.ManyToManyField('Trait', blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Subclass(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField()
+    dnd_class = models.ForeignKey(Class, on_delete=models.CASCADE, related_name='subclasses')
+    traits = models.ManyToManyField('Trait', blank=True)
 
     def __str__(self):
         return self.name

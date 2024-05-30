@@ -1,94 +1,148 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Open+Sans:wght@300;400;600;700&display=swap");
+/* static/css/styles.css */
+:root {
+    --black: #000000ff;
+    --red-cmyk: #e4070eff;
+    --beaver: #9f8473ff;
+    --jasmine: #ffde83ff;
+    --van-dyke: #40332fff;
+    --desert-sand: #e2c8b7ff;
+    --safety-orange: #f27c1aff;
+    --platinum: #dbdbdbff;
+    --rust: #af420eff;
+}
 
 body {
-    font-family: "Open Sans", sans-serif;
-    color: #0c0c0c;
-    background-color: #ffffff;
-    overflow-x: hidden;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--platinum);
 }
 
 .navbar {
-    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--black);
+    padding: 20px;
 }
 
-.navbar-brand span {
-    font-weight: bold;
-    font-size: 24px;
-    color: #e66c6c;
+.navbar-brand {
+    display: flex;
+    align-items: center;
 }
 
-.navbar-nav .nav-item .nav-link {
-    padding: 5px 20px;
-    color: #302a2a;
-    text-align: center;
-    text-transform: uppercase;
-    border-radius: 5px;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
+.navbar-brand a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
 }
 
-.navbar-nav .nav-item:hover .nav-link,
-.navbar-nav .nav-item.active .nav-link {
-    color: #00bbf0;
+.logo_image {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
 }
 
-.navbar-nav .nav-item.active .nav-link {
-    font-weight: 600;
+.navbar-brand p {
+    line-height: normal;
+    font-size: 30px;
+    color: var(--red-cmyk);
+    margin: 0;
+}
+
+.navbar-collapse {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.navbar-nav, .navbar-nav-right {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    margin: 0 10px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--red-cmyk);
+    padding: 5px 10px;
 }
 
 .navbar-toggler {
-    outline: none;
-    padding: 0;
-    width: 37px;
-    height: 42px;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
+    display: none;
+    background-color: var(--red-cmyk);
+    border: none;
+    color: var(--platinum);
+    font-size: 20px;
+    cursor: pointer;
 }
 
-.navbar-toggler span {
-    display: block;
-    width: 35px;
-    height: 4px;
-    background-color: #ffffff;
-    margin: 7px 0;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
-    position: relative;
-    border-radius: 5px;
-    transition: all 0.3s;
+.dropdown-toggle {
+    cursor: pointer;
 }
 
-.navbar-toggler span::before,
-.navbar-toggler span::after {
-    content: "";
+.dropdown-menu {
+    display: none;
     position: absolute;
+    background-color: var(--platinum);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    margin-top: 10px;
+    z-index: 1;
     left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: #ffffff;
-    top: -10px;
-    border-radius: 5px;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
 }
 
-.navbar-toggler span::after {
-    top: 10px;
+.dropdown-item {
+    padding: 10px;
+    text-decoration: none;
+    color: var(--black);
+    display: block;
 }
 
-.navbar-toggler[aria-expanded="true"] {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
+.dropdown-divider {
+    height: 1px;
+    background-color: var(--beaver);
+    margin: 5px 0;
 }
 
-.navbar-toggler[aria-expanded="true"] span {
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
+@media (max-width: 768px) {
+    .navbar-collapse {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navbar-toggler {
+        display: block;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navbar-nav-right {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .dropdown-toggle {
+        display: block;
+    }
 }
 
-.navbar-toggler[aria-expanded="true"] span::before,
-.navbar-toggler[aria-expanded="true"] span::after {
-    -webkit-transform: rotate(90deg);
-    transform: rotate(90deg);
-    top: 0;
+@media (min-width: 769px) {
+    .dropdown-toggle {
+        display: none;
+    }
+    
+    .dropdown-menu {
+        display: none;
+    }
 }
