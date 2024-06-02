@@ -22,7 +22,7 @@ def armor_list(request):
     })
 
 def characters(request):
-    return render(request, 'character_html.html')
+    return render(request, 'charactersheet.html')
 
 def login(request):
     return render(request, 'login.html')

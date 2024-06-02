@@ -1,0 +1,142 @@
+[
+    {
+        "cantrips": 2,
+        "spells_known": 2,
+        "spells_ready": 1,
+        "spell_level": "I",
+        "spell_slots": "-"
+    },
+    {
+        "cantrips": 2,
+        "spells_known": 3,
+        "spells_ready": 2,
+        "spell_level": "I",
+        "spell_slots": 2
+    },
+    {
+        "cantrips": 2,
+        "spells_known": 4,
+        "spells_ready": 2,
+        "spell_level": "II",
+        "spell_slots": 2
+    },
+    {
+        "cantrips": 3,
+        "spells_known": 5,
+        "spells_ready": 2,
+        "spell_level": "II",
+        "spell_slots": 2
+    },
+    {
+        "cantrips": 3,
+        "spells_known": 6,
+        "spells_ready": 2,
+        "spell_level": "III",
+        "spell_slots": 3
+    },
+    {
+        "cantrips": 3,
+        "spells_known": 7,
+        "spells_ready": 2,
+        "spell_level": "III",
+        "spell_slots": 3
+    },
+    {
+        "cantrips": 3,
+        "spells_known": 8,
+        "spells_ready": 2,
+        "spell_level": "IV",
+        "spell_slots": 4
+    },
+    {
+        "cantrips": 3,
+        "spells_known": 9,
+        "spells_ready": 2,
+        "spell_level": "IV",
+        "spell_slots": 4
+    },
+    {
+        "cantrips": 3,
+        "spells_known": 10,
+        "spells_ready": 2,
+        "spell_level": "V",
+        "spell_slots": 5
+    },
+    {
+        "cantrips": 4,
+        "spells_known": 10,
+        "spells_ready": 2,
+        "spell_level": "V",
+        "spell_slots": 5
+    },
+    {
+        "cantrips": 4,
+        "spells_known": 11,
+        "spells_ready": 3,
+        "spell_level": "V",
+        "spell_slots": 5
+    },
+    {
+        "cantrips": 4,
+        "spells_known": 11,
+        "spells_ready": 3,
+        "spell_level": "V",
+        "spell_slots": 6
+    },
+    {
+        "cantrips": 4,
+        "spells_known": 12,
+        "spells_ready": 3,
+        "spell_level": "V",
+        "spell_slots": 6
+    },
+    {
+        "cantrips": 4,
+        "spells_known": 12,
+        "spells_ready": 3,
+        "spell_level": "V",
+        "spell_slots": 6
+    },
+    {
+        "cantrips": 4,
+        "spells_known": 13,
+        "spells_ready": 3,
+        "spell_level": "V",
+        "spell_slots": 7
+    },
+    {
+        "cantrips": 4,
+        "spells_known": 13,
+        "spells_ready": 3,
+        "spell_level": "V",
+        "spell_slots": 7
+    },
+    {
+        "cantrips": 4,
+        "spells_known": 14,
+        "spells_ready": 4,
+        "spell_level": "V",
+        "spell_slots": 7
+    },
+    {
+        "cantrips": 4,
+        "spells_known": 14,
+        "spells_ready": 4,
+        "spell_level": "V",
+        "spell_slots": 8
+    },
+    {
+        "cantrips": 4,
+        "spells_known": 15,
+        "spells_ready": 4,
+        "spell_level": "V",
+        "spell_slots": 8
+    },
+    {
+        "cantrips": 4,
+        "spells_known": 15,
+        "spells_ready": 4,
+        "spell_level": "V",
+        "spell_slots": 8
+    }
+]
