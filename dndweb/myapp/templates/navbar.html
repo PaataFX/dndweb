@@ -1,70 +1,60 @@
-<!-- templates/navbar.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Navbar</title>
-    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/navbar.css">
+    <link rel="stylesheet" href="../static/fonts/mg-glaho-drunk-master/css/mg-glaho-drunk.min.css">
+    <link rel="stylesheet" href="../static/fonts/ka-lortkipanidze-master/css/ka-lortkipanidze.min.css">
+    <link rel="stylesheet" href="/bower_components/ka-lortkipanidze/css/ka-lortkipanidze.min.css">
 </head>
 <body>
     <nav class="navbar">
-        <div class="navbar-brand">
-            <a href="{% url 'home' %}">
-                <img src="../static/image/logo.jpg" alt="logo" class="logo_image">
-                <p>D&D Enigma</p>
-            </a>
-        </div>
-
-        <button class="navbar-toggler" id="navbar-toggler">
-            <span>&#9776;</span>
-        </button>
-
-        <div class="navbar-collapse" id="navbar-collapse">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="#">მთავარი</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">პერსონაჟები</a></li>
-                <li class="nav-item dropdown">
-                <li class="nav-item"><a class="nav-link" href="#">რასები</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">კლასები</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">ნივთები</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">უნარები</a></li>
+        <nav class="menu">
+            <a href="home.html"><img class="logo_image" src="../static/image/logo.jpg" alt="logo"></a>
+            <ul class="burger_bar">
+                <li>
+                    <a href="#!">
+                        <img class="logo_image" src="../static/image/icons/home.png" alt="logo">
+                        <h3>მთავარი</h3>
+                    </a>
                 </li>
-                {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link" href="#">გასვლა</a></li>
-                {% else %}
-                    <li class="nav-item"><a class="nav-link" href="#">შესვლა</a></li>
-                {% endif %}
+                <li>
+                    <a href="#!">
+                        <img class="logo_image" src="../static/image/icons/races.png" alt="races">
+                        <h3>რასები</h3>
+                    </a>
+                </li>
+                <li>
+                    <a href="#!">
+                        <img class="logo_image" src="../static/image/icons/classes.png" alt="classes">
+                        <h3>კლასები</h3>
+                    </a>
+                </li>
+                <li>
+                    <a href="#!">
+                        <img class="logo_image" src="../static/image/icons/spells.png" alt="spells">
+                        <h3>შელოცვები</h3>
+                    </a>
+                </li>
+                <li>
+                    <a href="#!">
+                        <img class="logo_image" src="../static/image/icons/feats.png" alt="abilities">
+                        <h3>ნიჭები</h3>
+                    </a>
+                </li>
+                <li>
+                    <a href="#!">
+                        <img class="logo_image" src="../static/image/icons/more.png" alt="misc">
+                        <h3>სხვა</h3>
+                    </a>
+                </li>
             </ul>
-        </div>
+            <ul class="login_signup">
+                <li><a href="#!">შესვლა</a></li>
+                <li><a href="#!">რეგისტრაცია</a></li>
+            </ul>
+        </nav>
     </nav>
-    <script>
-        document.getElementById('navbar-toggler').addEventListener('click', function() {
-            var navbarCollapse = document.getElementById('navbar-collapse');
-            if (navbarCollapse.style.display === 'block') {
-                navbarCollapse.style.display = 'none';
-            } else {
-                navbarCollapse.style.display = 'block';
-            }
-        });
-
-        document.getElementById('dropdown-toggle').addEventListener('click', function(event) {
-            event.preventDefault();
-            var dropdownMenu = document.getElementById('dropdown-menu');
-            if (dropdownMenu.style.display === 'block') {
-                dropdownMenu.style.display = 'none';
-            } else {
-                dropdownMenu.style.display = 'block';
-            }
-        });
-
-        // Hide the dropdown when clicking outside of it
-        document.addEventListener('click', function(event) {
-            var dropdownMenu = document.getElementById('dropdown-menu');
-            var dropdownToggle = document.getElementById('dropdown-toggle');
-            if (!dropdownMenu.contains(event.target) && !dropdownToggle.contains(event.target)) {
-                dropdownMenu.style.display = 'none';
-            }
-        });
-    </script>
 </body>
 </html>

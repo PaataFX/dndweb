@@ -1,0 +1,100 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    background-color: #000000;
+    padding: 20px;
+    width: 100%;
+    max-width: 960px; 
+    margin: 0 auto; 
+}
+
+.menu {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.logo_image {
+    width: 80px;
+}
+
+.burger_bar a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 90px;
+    text-decoration: none;
+}
+
+.burger_bar img {
+    aspect-ratio: 1/1;
+    width: 40px;
+    margin-bottom: 5px;
+    transition: 0.5s;
+}
+
+.burger_bar img:hover{
+    transform: scale(1.15);
+}
+
+.burger_bar, .login_signup {
+    list-style: none;
+    display: flex;
+}
+
+.login_signup {
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 5px;
+}
+
+.burger_bar li h3, .login_signup li a {
+    font-family: "KA_LORTKIPANIDZE", sans-serif;
+    border: solid 2px #881919;
+    border-radius: 15px;
+    margin: 0px 5px;
+    transition: 0.5s;
+    font-size: 18px;
+    padding: 5px 8px;
+    color: #fff2d6;
+    display: block;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    padding-top: 7px;
+}
+
+.burger_bar li h3:hover, .login_signup li a:hover {
+    background-color: #881919;
+    color: #ffffff;
+}
+
+.login_signup li a {
+    border-color: #143083;
+}
+
+.login_signup li a:hover {
+    background-color: #143083;
+}
+
+@media (max-width: 768px) {
+    .burger_bar, .login_signup {
+        flex-direction: column;
+    }
+
+    .burger_bar li, .login_signup li {
+        text-align: center; 
+    }
+
+    .logo_image {
+        margin: 0 auto 20px; 
+    }
+
+    .menu {
+        flex-direction: column;
+    }
+}

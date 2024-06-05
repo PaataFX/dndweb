@@ -218,8 +218,3 @@ spell_slot_dicts = {
     "wizard_spell_slots": wizard_spell_slots,
     "artificer_spell_slots": artificer_spell_slots
 }
-
-# Save each spell slot dictionary to a separate JSON file
-for spell_slot_name, spell_slot_data in spell_slot_dicts.items():
-    with open(f"{spell_slot_name}.json", "w") as file:
-        json.dump(spell_slot_data, file, indent=4)
