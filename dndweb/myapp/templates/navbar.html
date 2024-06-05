@@ -11,7 +11,7 @@
 <body>
     <nav class="navbar">
         <nav class="menu">
-            <a href="home.html"><img class="logo_image" src="../static/image/logo.jpg" alt="logo"></a>
+            <a href="/"><img class="logo_image" src="../static/image/logo.jpg" alt="logo"></a>
             <ul class="burger_bar">
                 <li>
                     <a href="#!">
@@ -51,9 +51,9 @@
                 </li>
             </ul>
             <ul class="login_signup">
-                <li><a href="#!">შესვლა</a></li>
-                <li><a href="#!">რეგისტრაცია</a></li>
-            </ul>
+                <li><a href="{% url 'login' %}">შესვლა</a></li>
+                <li><a href="{% url 'register' %}">რეგისტრაცია</a></li>
+            </ul>            
         </nav>
     </nav>
 </body>

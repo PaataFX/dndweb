@@ -3,7 +3,30 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from .spell_slots import bard_spell_slots, cleric_spell_slots, druid_spell_slots, paladin_spell_slots, ranger_spell_slots, sorcerer_spell_slots, warlock_spell_slots, wizard_spell_slots, artificer_spell_slots
+import os, random
 
+class User(models.Model):
+    username = models.CharField(max_length=200, null=True)
+    email = models.EmailField(unique=True, null=True)
+
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True, default='default_avatar.svg')
+
+    def save(self, *args, **kwargs):
+        if not self.avatar:  # If no avatar has been set yet
+            self.avatar = self.get_random_avatar()
+        super(User, self).save(*args, **kwargs)
+
+    @staticmethod
+    def get_random_avatar():
+        avatar_path = '.static/image/avatars/'  # Path where avatar images are stored
+        avatar_files = [f for f in os.listdir(avatar_path) if os.path.isfile(os.path.join(avatar_path, f))]
+        if avatar_files:
+            return os.path.join(avatar_path, random.choice(avatar_files))
+        else:
+            return 'default_avatar.svg'  # A default avatar if no files are found
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
 class Rarity(models.Model):
     NONE = "არცერთი"

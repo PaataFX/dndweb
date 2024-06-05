@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>{% block title %}Enigma{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'myapp/css/styles.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" type="image/x-icon" href="{% static 'image/logo.jpg' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/mg-glaho-drunk-master/css/mg-glaho-drunk.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/ka-lortkipanidze-master/css/ka-lortkipanidze.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    {% block content %}
+    <main class="auth layout">
+        <div class="container">
+            <div class="layout__box">
+                <div class="layout__body">
+                    {% if page == 'login' %}
+                        <form class="form" action="{% url 'login' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form__group">
+                                <label for="username">სახელი</label>
+                                <input id="username" name="username" type="text" placeholder="e.g. your_email@example.com" required />
+                            </div>
+                            <div class="form__group">
+                                <label for="password">პაროლი</label>
+                                <input id="password" name="password" type="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required />
+                            </div>
+                            <button class="btn btn--main" type="submit">შესვლა</button>
+                        </form>
+                        <div class="auth__action">
+                            <a href="{% url 'register' %}" class="btn btn--link">რეგისტრაცია</a>
+                        </div>
+                    {% else %}
+                        <h2 class="auth__tagline">რეგისტრაცია</h2>
+                        <form class="form" action="{% url 'register' %}" method="POST">
+                            {% csrf_token %}
+                            {% for field in form %}
+                            <div class="form__group">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                            {% endfor %}
+                            <button class="btn btn--main" type="submit">რეგისტრაცია</button>
+                        </form>
+                        <div class="auth__action">
+                            <p>უკვე გაქვს პროფილი?</p>
+                            <a href="{% url 'login' %}" class="btn btn--link">შესვლა</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </main>
+    {% endblock %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

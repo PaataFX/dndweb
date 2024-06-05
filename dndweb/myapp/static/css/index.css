@@ -1,0 +1,50 @@
+/* index.css */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+h3 {
+    font-family: 'ka-lortkipanidze-master', sans-serif;
+    color: #007bff; /* Primary color for headings */
+    margin-bottom: 20px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between columns */
+}
+
+.col {
+    flex: 1;
+    min-width: 180px; /* Minimum width of columns to ensure they wrap */
+    background-color: #f8f9fa; /* Light background for each item */
+    padding: 15px;
+    border-radius: 8px; /* Rounded corners for the boxes */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    text-align: center; /* Center the text inside columns */
+}
+
+.col:hover {
+    background-color: #e9ecef; /* Slightly darker background on hover */
+    cursor: pointer; /* Indicate the items are interactive */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
+
+    .col {
+        width: 100%; /* Full width on smaller screens */
+        margin-bottom: 10px; /* Space between items when stacked */
+    }
+}
+
