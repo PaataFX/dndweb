@@ -1,20 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'index.html' %}
 
-{% load static %}  {# Make sure this line is added #}
-
-{% block title %}Home - D&D Webpage{% endblock %}
-
-{% block content %}
-<main class="main-content">
-    <div class="container">
-        <div class="home-actions">
-            <a href="{% url 'characters' %}" class="btn btn-primary">View Characters</a>
-            <a href="{% url 'armor_list' %}" class="btn btn-secondary">View Armor List</a>
-        </div>
-    </div>
-</main>
-{% endblock %}
-
+{% load static %}
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
 {% endblock %}
+
+

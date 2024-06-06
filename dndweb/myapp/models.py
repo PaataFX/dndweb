@@ -5,28 +5,71 @@ from django.contrib.contenttypes.models import ContentType
 from .spell_slots import bard_spell_slots, cleric_spell_slots, druid_spell_slots, paladin_spell_slots, ranger_spell_slots, sorcerer_spell_slots, warlock_spell_slots, wizard_spell_slots, artificer_spell_slots
 import os, random
 
-class User(models.Model):
+from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import Group, Permission
+import os, random
+
+class UserManager(BaseUserManager):
+    def create_user(self, email, username, password=None, **extra_fields):
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, username=username, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, username, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        return self.create_user(email, username, password, **extra_fields)
+
+class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=200, null=True)
     email = models.EmailField(unique=True, null=True)
-
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True, default='default_avatar.svg')
 
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
+    # Override groups and user_permissions fields from PermissionsMixin
+    groups = models.ManyToManyField(
+        Group,
+        verbose_name='groups',
+        blank=True,
+        help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
+        related_name="user_set_custom",
+        related_query_name="user",
+    )
+    user_permissions = models.ManyToManyField(
+        Permission,
+        verbose_name='user permissions',
+        blank=True,
+        help_text='Specific permissions for this user.',
+        related_name="user_set_custom",
+        related_query_name="user",
+    )
+
+    objects = UserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+
     def save(self, *args, **kwargs):
-        if not self.avatar:  # If no avatar has been set yet
+        if not self.avatar:
             self.avatar = self.get_random_avatar()
-        super(User, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     @staticmethod
     def get_random_avatar():
-        avatar_path = '.static/image/avatars/'  # Path where avatar images are stored
+        avatar_path = 'static/image/avatars/'  # Correct the path if necessary
         avatar_files = [f for f in os.listdir(avatar_path) if os.path.isfile(os.path.join(avatar_path, f))]
         if avatar_files:
-            return os.path.join(avatar_path, random.choice(avatar_files))
+            return os.path.join('avatars/', random.choice(avatar_files))
         else:
-            return 'default_avatar.svg'  # A default avatar if no files are found
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+            return 'default_avatar.svg'
 
 class Rarity(models.Model):
     NONE = "არცერთი"

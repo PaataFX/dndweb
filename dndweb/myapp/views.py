@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from .forms import MyUserCreationForm
+from .forms import CustomUserUpdateForm
+
 
 def index(request):
     return render(request, 'index.html')
@@ -32,28 +34,27 @@ def characters(request):
 
 
 
+
 def loginPage(request):
     page = 'login'
     if request.user.is_authenticated:
         return redirect('home')
 
     if request.method == 'POST':
-        email = request.POST.get('email').lower()
+        username = request.POST.get('username')  # Change from email to username
         password = request.POST.get('password')
 
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            messages.error(request, 'მომხმარებელი არ არსებობს')
-            return render(request, 'base/login_register.html', {'page': page})
+        if username:
+            username = username.lower()  # Ensure username is in lowercase if your application requires it
+            user = authenticate(request, username=username, password=password)  # Authenticate directly with username
 
-        user = authenticate(request, username=user.username, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect('home')
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+            else:
+                messages.error(request, 'სახელი ან პაროლი არ არსებობს')
         else:
-            messages.error(request, 'სახელი ან პაროლი არ არსებობს')
+            messages.error(request, 'საჭიროა სახელი.')  # Change the error message to reflect the need for a username
 
     context = {'page': page}
     return render(request, 'base/login_register.html', context)
@@ -88,3 +89,18 @@ def registerPage(request):
 
     context = {'form': form}
     return render(request, 'base/login_register.html', context)
+
+@login_required
+def userProfile(request):
+    return render(request, 'user_profile.html')
+
+@login_required
+def update_profile(request):
+    if request.method == 'POST':
+        form = CustomUserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')  # Adjust the redirect as needed
+    else:
+        form = CustomUserUpdateForm(instance=request.user)
+    return render(request, 'user.html', {'form': form})

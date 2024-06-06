@@ -14,7 +14,7 @@
             <a href="/"><img class="logo_image" src="../static/image/logo.jpg" alt="logo"></a>
             <ul class="burger_bar">
                 <li>
-                    <a href="#!">
+                    <a href="{% url 'home' %}">
                         <img class="logo_image" src="../static/image/icons/home.png" alt="logo">
                         <h3>მთავარი</h3>
                     </a>
@@ -50,10 +50,22 @@
                     </a>
                 </li>
             </ul>
+            {% if user.is_authenticated %}
+            <ul class="login_signup">
+                <li>
+                    <a href="{% url 'profile' %}">
+                        <img class="user_avatar" src="{{ user.get_avatar_url }}" alt="User Avatar">
+                        <span>{{ user.username }}</span>
+                    </a>
+                </li>
+                <li><a href="{% url 'logout' %}">გამოსვლა</a></li>
+            </ul>
+            {% else %}
             <ul class="login_signup">
                 <li><a href="{% url 'login' %}">შესვლა</a></li>
                 <li><a href="{% url 'register' %}">რეგისტრაცია</a></li>
-            </ul>            
+            </ul>
+            {% endif %}
         </nav>
     </nav>
 </body>

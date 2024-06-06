@@ -1,0 +1,53 @@
+.container {
+    width: 90%; /* Adjusted to match common navbar container width */
+    margin: 0 auto; /* Center the container */
+    padding: 15px; /* Adjust padding to match navbar */
+}
+
+h1 {
+    color: #007bff; /* Common navbar brand color */
+}
+
+form {
+    margin-top: 15px; /* Adjust form margin to align with navbar form styling */
+}
+
+form label {
+    display: block;
+    margin-bottom: 8px; /* Adjust label margin */
+    color: #495057; /* Adjust label color to match navbar input labels */
+}
+
+form input[type="email"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px; /* Adjust margin bottom */
+    border: 1px solid #ced4da; /* Adjust border color to match navbar inputs */
+    border-radius: 0.25rem; /* Adjust border-radius to match navbar inputs */
+    color: #495057; /* Text color similar to navbar inputs */
+}
+
+button {
+    background-color: #007bff; /* Primary button color matching navbar */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 0.25rem; /* Adjust border-radius to match navbar buttons */
+    cursor: pointer;
+    font-size: 1rem; /* Adjust font size to match navbar buttons */
+}
+
+button:hover {
+    background-color: #0056b3; /* Darken button on hover to match navbar theme */
+}
+
+a {
+    display: inline-block;
+    margin-top: 20px;
+    color: #007bff; /* Link color matching navbar links */
+    text-decoration: none; /* Typically navbar links don't have underlines */
+}
+
+a:hover {
+    color: #0056b3; /* Adjust hover color to match navbar link hover */
+}

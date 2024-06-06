@@ -2,6 +2,23 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 
+from django.contrib.auth.forms import UserChangeForm
+
+class CustomUserUpdateForm(UserChangeForm):
+    email = forms.EmailField(label="იმეილი", required=True)
+
+    class Meta:
+        model = User
+        fields = ('username', 'email')  # Specify the fields you want to be editable
+
+    def __init__(self, *args, **kwargs):
+        super(CustomUserUpdateForm, self).__init__(*args, **kwargs)
+        self.fields['username'].help_text = 'Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'
+        self.fields['username'].label = "სახელი"
+        self.fields['email'].label = "იმეილი"
+        # Remove password fields from the form
+        del self.fields['password']
+
 class MyUserCreationForm(UserCreationForm):
     username = forms.CharField(label="სახელი", help_text="Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.")
     email = forms.EmailField(label="იმეილი")

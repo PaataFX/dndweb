@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+]{% endblock %}
 
 {% block title %}Index - D&D Webpage{% endblock %}
 
@@ -49,7 +52,3 @@
 </div>
 {% endblock %}
 
-
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/index.css' %}">
-{% endblock %}
