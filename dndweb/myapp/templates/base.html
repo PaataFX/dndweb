@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="geo">
-    <head>
-        {% load static %}
-        <meta charset="UTF-8">
-        <title>{% block title %}Enigma{% endblock %}</title>
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <link rel="icon" type="image/x-icon" href="{% static 'image/logo.jpg' %}">
-        <link rel="stylesheet" href="{% static 'fonts/mg-glaho-drunk-master/css/mg-glaho-drunk.min.css' %}">
-        <link rel="stylesheet" href="{% static 'fonts/ka-lortkipanidze-master/css/ka-lortkipanidze.min.css' %}">
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    </head>
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>{% block title %}Enigma{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" type="image/x-icon" href="{% static 'image/logo.jpg' %}">
+    <link rel="stylesheet" href="{% static 'fonts/mg-glaho-drunk-master/css/mg-glaho-drunk.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/ka-lortkipanidze-master/css/ka-lortkipanidze.min.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
 <body>
     {% include 'navbar.html' %}
 
-    
     <div class="container">
         {% block content %}
         {% endblock %}
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 </body>
 </html>

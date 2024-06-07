@@ -1,56 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <title>Navbar</title>
-    <link rel="stylesheet" href="../static/css/navbar.css">
-    <link rel="stylesheet" href="../static/fonts/mg-glaho-drunk-master/css/mg-glaho-drunk.min.css">
-    <link rel="stylesheet" href="../static/fonts/ka-lortkipanidze-master/css/ka-lortkipanidze.min.css">
-    <link rel="stylesheet" href="/bower_components/ka-lortkipanidze/css/ka-lortkipanidze.min.css">
-    {% load static %}
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/mg-glaho-drunk-master/css/mg-glaho-drunk.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/ka-lortkipanidze-master/css/ka-lortkipanidze.min.css' %}">
 </head>
 <body>
     <nav class="navbar">
         <nav class="menu">
-            <a href="/"><img class="logo_image" src="../static/image/logo.jpg" alt="logo"></a>
+            <a href="{% url 'home' %}"><img class="logo_image" src="{% static 'image/logo.jpg' %}" alt="logo"></a>
             <ul class="burger_bar">
                 <li>
                     <a href="{% url 'home' %}">
-                        <img class="logo_image" src="../static/image/icons/home.png" alt="logo">
+                        <img class="logo_image" src="{% static 'image/icons/home.png' %}" alt="home">
                         <h3>მთავარი</h3>
                     </a>
                 </li>
                 <li>
                     <a href="#!">
-                        <img class="logo_image" src="../static/image/icons/races.png" alt="races">
+                        <img class="logo_image" src="{% static 'image/icons/races.png' %}" alt="races">
                         <h3>რასები</h3>
                     </a>
                 </li>
                 <li>
                     <a href="#!">
-                        <img class="logo_image" src="../static/image/icons/classes.png" alt="classes">
+                        <img class="logo_image" src="{% static 'image/icons/classes.png' %}" alt="classes">
                         <h3>კლასები</h3>
                     </a>
                 </li>
                 <li>
                     <a href="#!">
-                        <img class="logo_image" src="../static/image/icons/spells.png" alt="spells">
+                        <img class="logo_image" src="{% static 'image/icons/spells.png' %}" alt="spells">
                         <h3>შელოცვები</h3>
                     </a>
                 </li>
                 <li>
                     <a href="#!">
-                        <img class="logo_image" src="../static/image/icons/feats.png" alt="abilities">
-                        <h3>ნიჭები</h3>
-                    </a>
-                </li>
-                <li>
-                    <a href="#!">
-                        <img class="logo_image" src="../static/image/icons/more.png" alt="misc">
+                        <img class="logo_image" src="{% static 'image/icons/more.png' %}" alt="misc">
                         <h3>სხვა</h3>
                     </a>
                 </li>
+                {% if user.is_authenticated %}
+                <li>
+                    <a href="#!">
+                        <img class="logo_image" src="{% static 'image/icons/character.png' %}" alt="special">
+                        <h3>პერსონაჟი</h3>
+                    </a>
+                </li>
+                {% endif %}
             </ul>
             {% if user.is_authenticated %}
             <ul class="login_signup">
