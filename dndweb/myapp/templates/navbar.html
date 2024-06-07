@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="../static/fonts/mg-glaho-drunk-master/css/mg-glaho-drunk.min.css">
     <link rel="stylesheet" href="../static/fonts/ka-lortkipanidze-master/css/ka-lortkipanidze.min.css">
     <link rel="stylesheet" href="/bower_components/ka-lortkipanidze/css/ka-lortkipanidze.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 </head>
 <body>
     <nav class="navbar">
@@ -54,7 +56,7 @@
             <ul class="login_signup">
                 <li>
                     <a href="{% url 'profile' %}">
-                        <img class="user_avatar" src="{{ user.get_avatar_url }}" alt="User Avatar">
+                        <img class="user_avatar" src="{{ user.avatar.url }}" alt="User Avatar">
                         <span>{{ user.username }}</span>
                     </a>
                 </li>

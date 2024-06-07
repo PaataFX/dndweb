@@ -33,6 +33,9 @@ def characters(request):
     return render(request, 'charactersheet.html')
 
 
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
 
 
 def loginPage(request):
@@ -41,12 +44,12 @@ def loginPage(request):
         return redirect('home')
 
     if request.method == 'POST':
-        username = request.POST.get('username')  # Change from email to username
+        username = request.POST.get('username')
         password = request.POST.get('password')
 
         if username:
-            username = username.lower()  # Ensure username is in lowercase if your application requires it
-            user = authenticate(request, username=username, password=password)  # Authenticate directly with username
+            username = username.lower()  # Normalize the username to lowercase
+            user = authenticate(request, username=username, password=password)
 
             if user is not None:
                 login(request, user)
@@ -54,7 +57,7 @@ def loginPage(request):
             else:
                 messages.error(request, 'სახელი ან პაროლი არ არსებობს')
         else:
-            messages.error(request, 'საჭიროა სახელი.')  # Change the error message to reflect the need for a username
+            messages.error(request, 'საჭიროა სახელი.')
 
     context = {'page': page}
     return render(request, 'base/login_register.html', context)
@@ -70,22 +73,14 @@ def registerPage(request):
         form = MyUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.username = user.username.lower()
+            user.username = user.username.lower()  # Normalize the username to lowercase
             user.save()
             login(request, user)
             return redirect('home')
         else:
-            # Form validation failed, provide specific error messages
-            if 'username' in form.errors:
-                messages.error(request, 'Username error: ' + ', '.join(form.errors['username']))
-            if 'email' in form.errors:
-                messages.error(request, 'Email error: ' + ', '.join(form.errors['email']))
-            if 'password1' in form.errors:
-                messages.error(request, 'Password error: ' + ', '.join(form.errors['password1']))
-            if 'password2' in form.errors:
-                messages.error(request, 'Password confirmation error: ' + ', '.join(form.errors['password2']))
-            # Add more specific error messages as needed
             messages.error(request, 'Registration failed. Please check the form and try again.')
+            for field in form.errors:
+                messages.error(request, f"{field.capitalize()} error: " + ', '.join(form.errors[field]))
 
     context = {'form': form}
     return render(request, 'base/login_register.html', context)

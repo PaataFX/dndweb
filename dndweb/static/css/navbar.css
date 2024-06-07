@@ -1,7 +1,7 @@
 .navbar {
     display: flex;
     align-items: center;
-    background-color: #000000;
+    background-color: #a90000;
     padding: 20px;
     width: 100%;
     max-width: 960px; 
@@ -79,6 +79,11 @@
 
 .login_signup li a:hover {
     background-color: #143083;
+}
+
+img.user_avatar {
+    aspect-ratio: 1/1;
+    width: 40px;
 }
 
 @media (max-width: 768px) {
