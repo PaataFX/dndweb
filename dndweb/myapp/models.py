@@ -29,18 +29,33 @@ class UserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True.')
 
         return self.create_user(username, email, password, **extra_fields)
+from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+
+class UserManager(BaseUserManager):
+    def create_user(self, username, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(username=username, email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, username, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        return self.create_user(username, email, password, **extra_fields)
 
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=200, unique=True, default='username')
     email = models.EmailField(unique=True, null=True, blank=True)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True, default='avatars/default_avatar.jpeg')
-
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
-    # Override groups and user_permissions fields from PermissionsMixin
     groups = models.ManyToManyField(
-        Group,
+        'auth.Group',
         verbose_name='groups',
         blank=True,
         help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
@@ -48,7 +63,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         related_query_name="user",
     )
     user_permissions = models.ManyToManyField(
-        Permission,
+        'auth.Permission',
         verbose_name='user permissions',
         blank=True,
         help_text='Specific permissions for this user.',
@@ -59,7 +74,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']  # Email is not required for superuser creation but is included for normal users.
+    REQUIRED_FIELDS = ['email']
+
+
 class Rarity(models.Model):
     NONE = "არცერთი"
     COMMON = 'უბრალო'

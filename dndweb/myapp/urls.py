@@ -12,5 +12,5 @@ urlpatterns = [
     path('logout/', views.logoutUser, name='logout'),
     path('register/', views.registerPage, name='register'),
     path('profile/', views.userProfile, name='profile'),
-    path('profile/update/', views.update_profile, name='profile_update'),
+    path('profile/update/', views.update_profile, name='profile_update'),  # Correct view function name
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

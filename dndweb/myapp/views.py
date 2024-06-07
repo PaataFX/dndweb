@@ -89,13 +89,32 @@ def registerPage(request):
 def userProfile(request):
     return render(request, 'user_profile.html')
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.core.files.storage import default_storage
+from django.conf import settings
+
 @login_required
 def update_profile(request):
     if request.method == 'POST':
-        form = CustomUserUpdateForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('profile')  # Adjust the redirect as needed
+        user = request.user
+        username = request.POST['username']
+        email = request.POST['email']
+        avatar = request.FILES.get('avatar')
+
+        user.username = username
+        user.email = email
+
+        if avatar:
+            if user.avatar:
+                old_file_path = user.avatar.path
+                if old_file_path != str(settings.MEDIA_ROOT / 'avatars/default_avatar.jpeg'):
+                    default_storage.delete(old_file_path)
+            user.avatar = avatar
+
+        user.save()
+        messages.success(request, 'Your profile was successfully updated!')
+        return redirect('profile_update')
     else:
-        form = CustomUserUpdateForm(instance=request.user)
-    return render(request, 'user.html', {'form': form})
+        return render(request, 'user_profile.html')

@@ -108,12 +108,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Directory where Django will look for additional static files
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-# Directory where collected static files will be stored (useful for deployment)
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
