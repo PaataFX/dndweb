@@ -424,3 +424,39 @@ class Subclass(models.Model):
 
     def __str__(self):
         return self.name
+
+class Character(models.Model):
+    name = models.CharField(max_length=100)
+    player = models.ForeignKey(User, on_delete=models.CASCADE, related_name='characters')
+    race = models.ForeignKey(Race, on_delete=models.CASCADE)
+    subrace = models.ForeignKey(Subrace, on_delete=models.CASCADE, null=True, blank=True)
+    dnd_class = models.ForeignKey(Class, on_delete=models.CASCADE)
+    subclass = models.ForeignKey(Subclass, on_delete=models.CASCADE, null=True, blank=True)
+    level = models.PositiveIntegerField(default=1)
+    experience_points = models.PositiveIntegerField(default=0)
+    hit_points = models.PositiveIntegerField()
+    max_hit_points = models.PositiveIntegerField()
+    temporary_hit_points = models.PositiveIntegerField(default=0)
+    armor_class = models.PositiveIntegerField()
+    initiative = models.IntegerField()
+    speed = models.PositiveIntegerField()
+    alignment = models.CharField(max_length=50)
+    background = models.CharField(max_length=100)
+    proficiency_bonus = models.IntegerField()
+    strength = models.PositiveIntegerField()
+    dexterity = models.PositiveIntegerField()
+    constitution = models.PositiveIntegerField()
+    intelligence = models.PositiveIntegerField()
+    wisdom = models.PositiveIntegerField()
+    charisma = models.PositiveIntegerField()
+    saving_throws = models.ManyToManyField(SavingThrow)
+    skills = models.ManyToManyField(Skill)
+    languages = models.ManyToManyField(Language)
+    proficiencies = models.ManyToManyField(Proficiency)
+    equipment = models.ManyToManyField(Equipment)
+    spells = models.ManyToManyField(Spell)
+    features = models.ManyToManyField(Trait)
+    actions = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
