@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Spells
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Spells</h1>
+    <div class="feature">
+        <div class="row">
+            <div class="col-lg-12">
+                <script type="text/javascript" src="http://d3g0gp89917ko0.cloudfront.net/v--b466fa696223/common--javascript/yahooui/tabview-min.js"></script>
+                <div id="spell-tabview" class="yui-navset">
+                    <ul class="yui-nav">
+                        {% for level in levels %}
+                        <li class="{% if forloop.first %}selected{% endif %}">
+                            <a href="javascript:;"><em>{{ level }}</em></a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="yui-content">
+                        {% for level in levels %}
+                        <div>
+                            <div class="list-pages-box">
+                                <table class="wiki-content-table">
+                                    <tr>
+                                        <th>Spell Name</th>
+                                        <th>School</th>
+                                        <th>Casting Time</th>
+                                        <th>Range</th>
+                                        <th>Duration</th>
+                                        <th>Components</th>
+                                    </tr>
+                                    {% for spell in spells %}
+                                    {% if spell.level == level %}
+                                    <tr>
+                                        <td>{{ spell.name }}</td>
+                                        <td>{{ spell.school.name }}</td>
+                                        <td>{{ spell.casting_time.name }}</td>
+                                        <td>{{ spell.range.name }}</td>
+                                        <td>{{ spell.duration.name }}</td>
+                                        <td>
+                                            {% for component in spell.components.all %}
+                                            {{ component.name }}
+                                            {% if not forloop.last %}, {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

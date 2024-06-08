@@ -11,13 +11,20 @@ from .forms import CustomUserUpdateForm
 from.models import Character
 from django.shortcuts import get_object_or_404
 
-
+from .models import Race, Class, Spell
 
 def index(request):
-    return render(request, 'index.html')
+    races = Race.objects.all()
+    classes = Class.objects.all()
+    spells = Spell.objects.all()
+    return render(request, 'index.html', {'races': races, 'classes': classes, 'spells': spells})
+
 
 def home(request):
-    return render(request, "home.html")
+    races = Race.objects.all()
+    classes = Class.objects.all()
+    spells = Spell.objects.all()
+    return render(request, 'home.html', {'races': races, 'classes': classes, 'spells': spells})
 
 def armor_list(request):
     light_armors = Armor.objects.filter(weight_class='Light')
@@ -140,36 +147,6 @@ def character_list(request):
         return redirect('login')
 
 
-from django.shortcuts import render, redirect
-from .forms import CustomCharacterForm
-from .models import Character, Race, Subrace, Class, Subclass
-
-def create_character(request):
-    if request.method == 'POST':
-        form = CustomCharacterForm(request.POST)
-        if form.is_valid():
-            character = form.save(commit=False)
-            character.player = request.user
-            character.save()
-            form.save_m2m()  # Save many-to-many fields, if any
-            return redirect('character_detail', character_id=character.id)
-        else:
-            print(form.errors)  # Debugging: Print form errors if the form is invalid
-    else:
-        form = CustomCharacterForm()
-
-    context = {
-        'form': form,
-        'races': Race.objects.all(),
-        'subraces': Subrace.objects.all(),
-        'classes': Class.objects.all(),
-        'subclasses': Subclass.objects.all(),
-    }
-    return render(request, 'create_character.html', context)
-
-
-
-
 from django.shortcuts import render, get_object_or_404
 from .models import Character
 
@@ -233,3 +210,47 @@ from .models import Character  # Assuming you have a Character model
 def character_detail(request, character_id):
     character = get_object_or_404(Character, pk=character_id)
     return render(request, 'character_detail.html', {'character': character})
+
+
+from django.shortcuts import render
+from .models import Character
+
+def character_sheet(request):
+    # Retrieve character data from the database (assuming you want to display the first character)
+    character = Character.objects.first()  # You can customize this query as needed
+    
+    # Pass character data to the template
+    return render(request, 'character_sheet.html', {'character': character})
+
+
+from .models import Race
+
+def races_page(request):
+    races = Race.objects.all()  # Assuming Race is the name of your model for races
+    return render(request, 'races_page.html', {'races': races})
+
+
+def race_detail(request, race_id):
+    race = get_object_or_404(Race, pk=race_id)
+    return render(request, 'race_detail.html', {'race': race})
+
+from .models import Class
+
+def classes_page(request):
+    classes = Class.objects.all()
+    return render(request, 'classes_page.html', {'classes': classes})
+
+
+from .models import Class
+
+def class_detail(request, class_id):
+    class_obj = get_object_or_404(Class, pk=class_id)
+    return render(request, 'class_detail.html', {'class_obj': class_obj})
+
+from .models import Spell
+
+def spells_page(request):
+    spells = Spell.objects.all()
+    # Get unique spell levels
+    levels = set(spell.level for spell in spells)
+    return render(request, 'spells_page.html', {'spells': spells, 'levels': sorted(levels)})

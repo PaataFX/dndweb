@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Rarity, Character, Equipment, SpellSlots, Dice, DamageType, Armor, Property, Weapon, Tool, AbilityScore, Skill, SavingThrow, Class, Subclass, Race, Subrace, Spell, Language, Feat, ProficiencyBonus, Proficiency, Trait, WeaponCategory, WeaponGroup, ArmorGroup, Item, EquipmentOption, User
+from .models import School, CastingTime, Range, Duration, Components, Rarity, Character, Equipment, SpellSlots, Dice, DamageType, Armor, Property, Weapon, Tool, AbilityScore, Skill, SavingThrow, Class, Subclass, Race, Subrace, Spell, Language, Feat, ProficiencyBonus, Proficiency, Trait, WeaponCategory, WeaponGroup, ArmorGroup, Item, EquipmentOption, User
 
 admin.site.register(Character)
 admin.site.register(Rarity)
@@ -30,3 +30,8 @@ admin.site.register(ArmorGroup)
 admin.site.register(Item)
 admin.site.register(EquipmentOption)
 admin.site.register(User)
+admin.site.register(School)
+admin.site.register(CastingTime)
+admin.site.register(Range)
+admin.site.register(Duration)
+admin.site.register(Components)

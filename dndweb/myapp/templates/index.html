@@ -1,53 +1,36 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 {% endblock %}
 
-{% block title %}Index - D&D Webpage{% endblock %}
+{% block title %}
+Index - D&D Webpage
+{% endblock %}
 
 {% block content %}
 <div class="container">
     <section id="races">
-        <h3>რასები</h3>
+        <h3><a href="{% url 'races_page' %}">რასები</a></h3>
         <div class="row">
-            <div class="col">Elves</div>
-            <div class="col">Dwarfs</div>
-            <div class="col">Humans</div>
-            <!-- Add more races as needed -->
+            {% for race in races %}
+            <div class="col">{{ race.name }}</div>
+            {% endfor %}
         </div>
     </section>
 
     <section id="classes">
-        <h3>კლასები</h3>
+        <h3><a href="{% url 'classes_page' %}">კლასები</a></h3>
         <div class="row">
-            <div class="col">Warrior</div>
-            <div class="col">Mage</div>
-            <div class="col">Rogue</div>
-            <!-- Add more classes as needed -->
+            {% for class in classes %}
+            <div class="col">{{ class.name }}</div>
+            {% endfor %}
         </div>
     </section>
 
     <section id="spells">
-        <h3>შელოცვები</h3>
-        <div class="row">
-            <div class="col">Fireball</div>
-            <div class="col">Heal</div>
-            <div class="col">Invisibility</div>
-            <!-- Add more spells as needed -->
-        </div>
+        <h3><a href="{% url 'spells_page' %}">შელოცვები</a></h3>
     </section>
-
-    <section id="feats">
-        <h3>ნიჭები</h3>
-        <div class="row">
-            <div class="col">Alert</div>
-            <div class="col">Athlete</div>
-            <div class="col">Charger</div>
-            <!-- Add more feats as needed -->
-        </div>
-    </section>
-
-    <!-- Add more sections as needed based on your navbar categories -->
 </div>
 {% endblock %}

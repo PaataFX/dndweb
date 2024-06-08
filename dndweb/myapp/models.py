@@ -199,17 +199,61 @@ class SavingThrow(models.Model):
     def __str__(self):
         return self.name
 
+
+
+
+from django.db import models
+
+class School(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+class CastingTime(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+class Range(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+class Duration(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+class Components(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Spell(models.Model):
     name = models.CharField(max_length=100)
     level = models.IntegerField()
-    school = models.CharField(max_length=50)
-    casting_time = models.CharField(max_length=50)
-    range = models.CharField(max_length=50)
-    duration = models.CharField(max_length=50)
-    components = models.CharField(max_length=50)
+    school = models.ForeignKey('School', on_delete=models.CASCADE)
+    casting_time = models.ForeignKey('CastingTime', on_delete=models.CASCADE)
+    range = models.ForeignKey('Range', on_delete=models.CASCADE)
+    duration = models.ForeignKey('Duration', on_delete=models.CASCADE)
+    components = models.ManyToManyField('Components')
+    dice_num = models.PositiveIntegerField(blank=True, null=True)
+    dice = models.ForeignKey(Dice, on_delete=models.CASCADE, blank=True, null=True)
+    damage_type = models.ForeignKey(DamageType, on_delete=models.CASCADE, blank=True, null=True)
     description = models.TextField()
     at_higher_levels = models.TextField(blank=True) 
-    classes_using = models.ManyToManyField('Class', blank=True) 
+    classes_using = models.ManyToManyField('Class', blank=True)
 
     def __str__(self):
         return self.name

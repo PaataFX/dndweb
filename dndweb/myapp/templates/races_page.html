@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Races
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Races</h1>
+    {% for race in races %}
+    <div>
+        <h2><a href="{% url 'race_detail' race.id %}">{{ race.name }}</a></h2>
+        <!-- Display other race details here -->
+        <p>{{ race.description }}</p>
+        <!-- Add more fields as needed -->
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

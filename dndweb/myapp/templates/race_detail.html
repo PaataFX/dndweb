@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ race.name }} Details
+{% endblock %}
+
+{% block content %}
+<style>
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    p {
+        margin-bottom: 10px;
+    }
+
+    .traits-section {
+        margin-top: 20px;
+    }
+
+    .trait {
+        margin-top: 20px;
+    }
+
+    .trait-name {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .trait-description {
+        margin-top: 10px;
+    }
+
+    .trait-details {
+        margin-top: 10px;
+    }
+
+    .trait-details p {
+        margin-bottom: 5px;
+    }
+
+    /* Add more styling as needed */
+</style>
+
+<div class="container">
+    <h1>{{ race.name }} Details</h1>
+    <div>
+        <p>Description: {{ race.description }}</p>
+        <p>Age: {{ race.age }}</p>
+        <p>Size: {{ race.size }}</p>
+        <p>Speed: {{ race.speed }}</p>
+        <p>Strength: {{ race.strength }}</p>
+        <p>Dexterity: {{ race.dexterity }}</p>
+        <p>Constitution: {{ race.constitution }}</p>
+        <p>Intelligence: {{ race.intelligence }}</p>
+        <p>Wisdom: {{ race.wisdom }}</p>
+        <p>Charisma: {{ race.charisma }}</p>
+        <!-- Displaying ManyToManyField data -->
+        <div class="traits-section">
+            <p>Traits:</p>
+            {% for trait in race.traits.all %}
+                {% if not trait.default and trait.name %}
+                    <div class="trait">
+                        <p class="trait-name">{{ trait.name }}</p>
+                        <p class="trait-description">{{ trait.description }}</p>
+                        <div class="trait-details">
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <p>
+            Languages:
+            {% for language in race.languages.all %}
+                {{ language.name }}
+                {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+</div>
+{% endblock %}

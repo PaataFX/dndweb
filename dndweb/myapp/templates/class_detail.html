@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ class_obj.name }} Details
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ class_obj.name }} Details</h1>
+    <div>
+        <p>Description: {{ class_obj.description }}</p>
+        <p>Hit Die: {{ class_obj.hit_die }}</p>
+        <p>Hit Points at 1st Level: {{ class_obj.hit_points_at_first_level }}</p>
+        <p>Hit Points at Higher Levels: {{ class_obj.hit_points_at_higher_levels }}</p>
+        <p>Saving Throw Proficiencies:
+            {% for saving_throw in class_obj.saving_throw_proficiencies.all %}
+            {{ saving_throw.name }}
+            {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p>Armor Proficiencies:
+            {% for armor in class_obj.armor_proficiencies.all %}
+            {{ armor.name }}
+            {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p>Weapon Proficiencies:
+            {% for weapon in class_obj.weapon_proficiencies.all %}
+            {{ weapon.name }}
+            {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p>Tool Proficiencies:
+            {% for tool in class_obj.tool_proficiencies.all %}
+            {{ tool.name }}
+            {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p>Skill Proficiencies:
+            {% for skill in class_obj.skill_proficiencies.all %}
+            {{ skill.name }}
+            {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p>Weapon Groups:
+            {% for weapon_group in class_obj.weapon_groups.all %}
+            {{ weapon_group.name }}
+            {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p>Armor Groups:
+            {% for armor_group in class_obj.armor_groups.all %}
+            {{ armor_group.name }}
+            {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p>Equipment:
+            {% for equipment in class_obj.equipment.all %}
+            {{ equipment.name }}
+            {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p>Spellcasting Ability: {{ class_obj.spellcasting_ability }}</p>
+        <p>Traits:
+            {% for trait in class_obj.traits.all %}
+            {{ trait.name }}
+            {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+</div>
+{% endblock %}

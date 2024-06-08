@@ -1,3 +1,4 @@
+/* race_detail.css */
 
 body, html {
     font-family: "KA_LORTKIPANIDZE", sans-serif;
@@ -7,6 +8,7 @@ body, html {
     padding: 0;
     height: 100%;
 }
+
 .container {
     max-width: 960px;
     margin: auto;
@@ -29,18 +31,18 @@ h3 {
     gap: 20px; /* Space between columns */
 }
 
-.col {
+.trait {
     flex: 1;
     min-width: 180px; /* Minimum width of columns to ensure they wrap */
     background-color: #1a1a1a; /* Updated to match navbar.css background color */
     padding: 15px;
     border-radius: 8px; /* Rounded corners for the boxes */
     box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /* Updated shadow color for contrast */
-    text-align: center; /* Center the text inside columns */
+    text-align: left; /* Align text to left */
     color: #fff2d6; /* Text color to match navbar.css */
 }
 
-.col:hover {
+.trait:hover {
     background-color: #333333; /* Slightly darker background on hover */
     cursor: pointer; /* Indicate the items are interactive */
 }
@@ -51,7 +53,7 @@ h3 {
         flex-direction: column;
     }
 
-    .col {
+    .trait {
         width: 100%; /* Full width on smaller screens */
         margin-bottom: 10px; /* Space between items when stacked */
     }
