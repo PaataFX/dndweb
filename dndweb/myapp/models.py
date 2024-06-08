@@ -425,38 +425,45 @@ class Subclass(models.Model):
     def __str__(self):
         return self.name
 
+
+from django.conf import settings
+
+
+from django.db import models
+from django.contrib.auth.models import User
+
 class Character(models.Model):
     name = models.CharField(max_length=100)
-    player = models.ForeignKey(User, on_delete=models.CASCADE, related_name='characters')
+    player = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     race = models.ForeignKey(Race, on_delete=models.CASCADE)
     subrace = models.ForeignKey(Subrace, on_delete=models.CASCADE, null=True, blank=True)
     dnd_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     subclass = models.ForeignKey(Subclass, on_delete=models.CASCADE, null=True, blank=True)
     level = models.PositiveIntegerField(default=1)
     experience_points = models.PositiveIntegerField(default=0)
-    hit_points = models.PositiveIntegerField()
-    max_hit_points = models.PositiveIntegerField()
+    hit_points = models.PositiveIntegerField(default=10)  # Provide a default value
+    max_hit_points = models.PositiveIntegerField(default=10)  # Provide a default value
     temporary_hit_points = models.PositiveIntegerField(default=0)
-    armor_class = models.PositiveIntegerField()
-    initiative = models.IntegerField()
-    speed = models.PositiveIntegerField()
-    alignment = models.CharField(max_length=50)
-    background = models.CharField(max_length=100)
-    proficiency_bonus = models.IntegerField()
+    armor_class = models.PositiveIntegerField(default=10)  # Default armor class
+    initiative = models.IntegerField(default=0)  # Default initiative
+    speed = models.PositiveIntegerField(default=30)  # Default speed
+    alignment = models.CharField(max_length=50, blank=True, null=True)
+    background = models.CharField(max_length=100, blank=True, null=True)
+    proficiency_bonus = models.IntegerField(default=2)  # Provide a default value
     strength = models.PositiveIntegerField()
     dexterity = models.PositiveIntegerField()
     constitution = models.PositiveIntegerField()
     intelligence = models.PositiveIntegerField()
     wisdom = models.PositiveIntegerField()
     charisma = models.PositiveIntegerField()
-    saving_throws = models.ManyToManyField(SavingThrow)
-    skills = models.ManyToManyField(Skill)
-    languages = models.ManyToManyField(Language)
-    proficiencies = models.ManyToManyField(Proficiency)
-    equipment = models.ManyToManyField(Equipment)
-    spells = models.ManyToManyField(Spell)
-    features = models.ManyToManyField(Trait)
-    actions = models.TextField(blank=True)
+    saving_throws = models.ManyToManyField(SavingThrow, blank=True)  # Allow blank
+    skills = models.ManyToManyField(Skill, blank=True)  # Allow blank
+    languages = models.ManyToManyField(Language, blank=True)  # Allow blank
+    proficiencies = models.ManyToManyField(Proficiency, blank=True)  # Allow blank
+    equipment = models.ManyToManyField(Equipment, blank=True)  # Allow blank
+    spells = models.ManyToManyField(Spell, blank=True)  # Allow blank
+    features = models.ManyToManyField(Trait, blank=True)  # Allow blank
+    actions = models.TextField(blank=True)  # Allow blank
 
     def __str__(self):
         return self.name

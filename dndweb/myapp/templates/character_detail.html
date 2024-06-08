@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <title>Character Sheet</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/charactersheet.css' %}">
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <form class="charsheet">
+    <header>
+        <section class="charname">
+        <label for="charname">Character Name</label>
+        <input name="charname" placeholder="Thoradin Fireforge">
+        </section>
+        <section class="misc">
+        <ul>
+            <li>
+            <label for="classlevel">Class & Level</label>
+            <input name="classlevel" placeholder="Paladin 2">
+            </li>
+            <li>
+            <label for="background">Background</label>
+            <input name="background" placeholder="Acolyte">
+            </li>
+            <li>
+            <label for="playername">Player Name</label>
+            <input name="playername" placeholder="Player McPlayerface">
+            </li>
+            <li>
+            <label for="race">Race</label>
+            <input name="race" placeholder="Half-elf">
+            </li>
+            <li>
+            <label for="alignment">Alignment</label>
+            <input name="alignment" placeholder="Lawful Good">
+            </li>
+            <li>
+            <label for="experiencepoints">Experience Points</label>
+            <input name="experiencepoints" placeholder="3240">
+            </li>
+        </ul>
+        </section>
+    </header>
+    
+    <main>
+        <section>
+        <section class="attributes">
+            <div class="scores">
+            <ul>
+                <li>
+                <div class="score">
+                    <label for="Strengthscore">Strength</label>
+                    <input name="Strengthscore" placeholder="10">
+                </div>
+                <div class="modifier">
+                    <input name="Strengthmod" placeholder="+0">
+                </div>
+                </li>
+                <li>
+                <div class="score">
+                    <label for="Dexterityscore">Dexterity</label>
+                    <input name="Dexterityscore" placeholder="10">
+                </div>
+                <div class="modifier">
+                    <input name="Dexteritymod" placeholder="+0">
+                </div>
+                </li>
+                <li>
+                <div class="score">
+                    <label for="Constitutionscore">Constitution</label>
+                    <input name="Constitutionscore" placeholder="10">
+                </div>
+                <div class="modifier">
+                    <input name="Constitutionmod" placeholder="+0">
+                </div>
+                </li>
+                <li>
+                <div class="score">
+                    <label for="Wisdomscore">Wisdom</label>
+                    <input name="Wisdomscore" placeholder="10">
+                </div>
+                <div class="modifier">
+                    <input name="Wisdommod" placeholder="+0">
+                </div>
+                </li>
+                <li>
+                <div class="score">
+                    <label for="Intelligencescore">Intelligence</label>
+                    <input name="Intelligencescore" placeholder="10">
+                </div>
+                <div class="modifier">
+                    <input name="Intelligencemod" placeholder="+0">
+                </div>
+                </li>
+                <li>
+                <div class="score">
+                    <label for="Charismascore">Charisma</label>
+                    <input name="Charismascore" placeholder="10">
+                </div>
+                <div class="modifier">
+                    <input name="Charismamod" placeholder="+0">
+                </div>
+                </li>
+            </ul>
+            </div>
+            
+            <div class="attr-applications">
+            <div class="inspiration box">
+                <div class="label-container">
+                <label for="inspiration">Inspiration</label>
+                </div>
+                <input name="inspiration" type="checkbox">
+            </div>
+            
+            <div class="proficiencybonus box">
+                <div class="label-container">
+                <label for="proficiencybonus">Proficiency Bonus</label>
+                </div>
+                <input name="proficiencybonus" placeholder="+2">
+            </div>
+            
+            <div class="saves list-section box">
+                <ul>
+                <li>
+                    <label for="Strength-save">Strength</label>
+                    <input name="Strength-save" type="text" placeholder="+0">
+                    <input name="Strength-save-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Dexterity-save">Dexterity</label>
+                    <input name="Dexterity-save" type="text" placeholder="+0">
+                    <input name="Dexterity-save-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Constitution-save">Constitution</label>
+                    <input name="Constitution-save" type="text" placeholder="+0">
+                    <input name="Constitution-save-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Wisdom-save">Wisdom</label>
+                    <input name="Wisdom-save" type="text" placeholder="+0">
+                    <input name="Wisdom-save-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Intelligence-save">Intelligence</label>
+                    <input name="Intelligence-save" type="text" placeholder="+0">
+                    <input name="Intelligence-save-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Charisma-save">Charisma</label>
+                    <input name="Charisma-save" type="text" placeholder="+0">
+                    <input name="Charisma-save-prof" type="checkbox">
+                </li>
+                </ul>
+                <div class="label">Saving Throws</div>
+            </div>
+            
+            <div class="skills list-section box">
+                <ul>
+                <li>
+                    <label for="Acrobatics">Acrobatics <span class="skill">(Dex)</span></label>
+                    <input name="Acrobatics" type="text" placeholder="+0">
+                    <input name="Acrobatics-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Animal Handling">Animal Handling <span class="skill">(Wis)</span></label>
+                    <input name="Animal Handling" type="text" placeholder="+0">
+                    <input name="Animal Handling-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Arcana">Arcana <span class="skill">(Int)</span></label>
+                    <input name="Arcana" type="text" placeholder="+0">
+                    <input name="Arcana-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Athletics">Athletics <span class="skill">(Str)</span></label>
+                    <input name="Athletics" type="text" placeholder="+0">
+                    <input name="Athletics-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Deception">Deception <span class="skill">(Cha)</span></label>
+                    <input name="Deception" type="text" placeholder="+0">
+                    <input name="Deception-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="History">History <span class="skill">(Int)</span></label>
+                    <input name="History" type="text" placeholder="+0">
+                    <input name="History-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Insight">Insight <span class="skill">(Wis)</span></label>
+                    <input name="Insight" type="text" placeholder="+0">
+                    <input name="Insight-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Intimidation">Intimidation <span class="skill">(Cha)</span></label>
+                    <input name="Intimidation" type="text" placeholder="+0">
+                    <input name="Intimidation-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Investigation">Investigation <span class="skill">(Int)</span></label>
+                    <input name="Investigation" type="text" placeholder="+0">
+                    <input name="Investigation-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Medicine">Medicine <span class="skill">(Wis)</span></label>
+                    <input name="Medicine" type="text" placeholder="+0">
+                    <input name="Medicine-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Nature">Nature <span class="skill">(Int)</span></label>
+                    <input name="Nature" type="text" placeholder="+0">
+                    <input name="Nature-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Perception">Perception <span class="skill">(Wis)</span></label>
+                    <input name="Perception" type="text" placeholder="+0">
+                    <input name="Perception-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Performance">Performance <span class="skill">(Cha)</span></label>
+                    <input name="Performance" type="text" placeholder="+0">
+                    <input name="Performance-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Persuasion">Persuasion <span class="skill">(Cha)</span></label>
+                    <input name="Persuasion" type="text" placeholder="+0">
+                    <input name="Persuasion-prof" type="checkbox">
+                
+
+    </li>
+                <li>
+                    <label for="Religion">Religion <span class="skill">(Int)</span></label>
+                    <input name="Religion" type="text" placeholder="+0">
+                    <input name="Religion-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Sleight of Hand">Sleight of Hand <span class="skill">(Dex)</span></label>
+                    <input name="Sleight of Hand" type="text" placeholder="+0">
+                    <input name="Sleight of Hand-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Stealth">Stealth <span class="skill">(Dex)</span></label>
+                    <input name="Stealth" type="text" placeholder="+0">
+                    <input name="Stealth-prof" type="checkbox">
+                </li>
+                <li>
+                    <label for="Survival">Survival <span class="skill">(Wis)</span></label>
+                    <input name="Survival" type="text" placeholder="+0">
+                    <input name="Survival-prof" type="checkbox">
+                </li>
+                </ul>
+                <div class="label">Skills</div>
+            </div>
+            
+            </div>
+            
+        </section>
+        
+        <div class="passive-perception box">
+            <div class="label-container">
+            <label for="passiveperception">Passive Wisdom (Perception)</label>
+            </div>
+            <input name="passiveperception" placeholder="10">
+        </div>
+        
+        <div class="otherprofs box textblock">
+            <label for="otherprofs">Other Proficiencies and Languages</label>
+            <textarea name="otherprofs"></textarea>
+        </div>
+        
+        </section>
+        
+        <section>
+        <section class="combat">
+            <div class="armorclass">
+            <div>
+                <label for="ac">Armor Class</label>
+                <input type="text" name="ac" placeholder="10">
+            </div>
+            </div>
+            
+            <div class="initiative">
+            <div>
+                <label for="initiative">Initiative</label>
+                <input type="text" name="initiative" placeholder="+0">
+            </div>
+            </div>
+            
+            <div class="speed">
+            <div>
+                <label for="speed">Speed</label>
+                <input type="text" name="speed" placeholder="30">
+            </div>
+            </div>
+            
+            <div class="hp">
+            <div class="regular">
+                <div class="max">
+                <label for="maxhp">Hit Point Maximum</label>
+                <input type="text" name="maxhp" placeholder="10">
+                </div>
+                <div class="current">
+                <label for="currenthp">Current Hit Points</label>
+                <input type="text" name="currenthp">
+                </div>
+            </div>
+            <div class="temporary">
+                <label for="temphp">Temporary Hit Points</label>
+                <input type="text" name="temphp">
+            </div>
+            </div>
+            
+            <div class="hitdice">
+            <div>
+                <div class="total">
+                <label for="totalhd">Total</label>
+                <input type="text" name="totalhd" placeholder="2d10">
+                </div>
+                <div class="remaining">
+                <label for="remaininghd">Hit Dice</label>
+                <input type="text" name="remaininghd">
+                </div>
+            </div>
+            </div>
+            
+            <div class="deathsaves">
+            <div>
+                <div class="label">
+                <label>Death Saves</label>
+                </div>
+                <div class="marks">
+                <div class="deathsuccesses">
+                    <label>Successes</label>
+                    <div class="bubbles">
+                    <input type="checkbox" name="deathsuccess1">
+                    <input type="checkbox" name="deathsuccess2">
+                    <input type="checkbox" name="deathsuccess3">
+                    </div>
+                </div>
+                <div class="deathfails">
+                    <label>Failures</label>
+                    <div class="bubbles">
+                    <input type="checkbox" name="deathfail1">
+                    <input type="checkbox" name="deathfail2">
+                    <input type="checkbox" name="deathfail3">
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            
+        </section>
+        
+        <section class="attacksandspellcasting">
+            <div>
+            <label>Attacks & Spellcasting</label>
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Atk Bonus</th>
+                    <th>Damage/Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="text" name="atkname1"></td>
+                    <td><input type="text" name="atkbonus1"></td>
+                    <td><input type="text" name="atkdamage1"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="atkname2"></td>
+                    <td><input type="text" name="atkbonus2"></td>
+                    <td><input type="text" name="atkdamage2"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="atkname3"></td>
+                    <td><input type="text" name="atkbonus3"></td>
+                    <td><input type="text" name="atkdamage3"></td>
+                </tr>
+                </tbody>
+            </table>
+            <textarea></textarea>
+            </div>
+        </section>
+        
+        <section class="equipment">
+            <div>
+            <label>Equipment</label>
+            <div class="money">
+                <ul>
+                <li>
+                    <label for="cp">cp</label>
+                    <input name="cp">
+                </li>
+                <li>
+                    <label for="sp">sp</label>
+                    <input name="sp">
+                </li>
+                <li>
+                    <label for="ep">ep</label>
+                    <input name="ep">
+                </li>
+                <li>
+                    <label for="gp">gp</label>
+                    <input name="gp">
+                </li>
+                <li>
+                    <label for="pp">pp</label>
+                    <input name="pp">
+                </li>
+                </ul>
+            </div>
+            <textarea placeholder="Equipment list here"></textarea>
+            </div>
+        </section>
+        
+        </section>
+        
+        <section>
+        <section class="flavor">
+            <div class="personality">
+            <label for="personality">Personality</label>
+            <textarea name="personality"></textarea>
+            </div>
+            
+            <div class="ideals">
+            <label for="ideals">Ideals</label>
+            <textarea name="ideals"></textarea>
+            </div>
+            
+            <div class="bonds">
+            <label for="bonds">Bonds</label>
+            <textarea name="bonds"></textarea>
+            </div>
+            
+            <div class="flaws">
+            <label for="flaws">Flaws</label>
+            <textarea name="flaws"></textarea>
+            </div>
+            
+        </section>
+        
+        <section class="features">
+            <div>
+            <label for="features">Features & Traits</label>
+            <textarea name="features"></textarea>
+            </div>
+        </section>
+        
+        </section>
+        
+    </main>
+    </form>
+</body>
+</html>

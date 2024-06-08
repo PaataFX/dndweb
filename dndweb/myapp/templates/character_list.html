@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static i18n %}
+
+<link rel="stylesheet" href="{% static 'css/character_list.css' %}">
+
+<div class="container">
+    <h2>{% trans "Characters" %}</h2>
+
+    <a href="{% url 'create_character' %}">
+        <button class="btn btn-primary">{% trans "Create Character" %}</button>
+    </a>
+
+    {% if characters %}
+        <div class="row">
+            {% for character in characters %}
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mb-4">
+                        <img src="{% if character.avatar %}{{ character.avatar.url }}{% else %}{% static 'images/default_avatar.png' %}{% endif %}" class="card-img-top" alt="{{ character.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ character.name }}</h5>
+                            <p class="card-text">{% trans "Class" %}: {{ character.dnd_class.name }}</p>
+                            <p class="card-text">{% trans "Race" %}: {{ character.race.name }}</p>
+                            <p class="card-text">{% trans "Level" %}: {{ character.level }}</p>
+                            <a href="{% url 'character_detail' character.id %}" class="btn btn-info">{% trans "Details" %}</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>{% trans "No characters found." %}</p>
+    {% endif %}
+</div>
+
+{% endblock %}

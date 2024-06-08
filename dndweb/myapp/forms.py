@@ -28,3 +28,23 @@ class MyUserCreationForm(UserCreationForm):
     class Meta:
         model = User  # Use the custom user model
         fields = ['username', 'email', 'password1', 'password2']
+        
+
+from .models import Character
+
+class CustomCharacterForm(forms.ModelForm):
+    class Meta:
+        model = Character
+        fields = [
+            'name', 'race', 'subrace', 'dnd_class', 'subclass', 'level', 'alignment', 'background', 
+            'strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'
+        ]
+        
+    def __init__(self, *args, **kwargs):
+        super(CustomCharacterForm, self).__init__(*args, **kwargs)
+        # Set fields as optional
+        self.fields['subrace'].required = False
+        self.fields['subclass'].required = False
+        self.fields['alignment'].required = False
+        self.fields['background'].required = False
+        self.fields['level'].required = False

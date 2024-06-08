@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/create_character.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<h1>შექმენი პერსონაჟი</h1>
+
+<form method="POST" enctype="multipart/form-data" id="character-form">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="id_name">სახელი:</label>
+        <input type="text" class="form-control" id="id_name" name="name" required>
+    </div>
+
+    <div class="form-group">
+        <label for="id_race">რასა:</label>
+        <select class="form-control" id="id_race" name="race" required>
+            {% for race in races %}
+            <option value="{{ race.id }}">{{ race.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="id_subrace">ქვერასა:</label>
+        <select class="form-control" id="id_subrace" name="subrace">
+            {% for subrace in subraces %}
+            <option value="{{ subrace.id }}">{{ subrace.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="id_dnd_class">კლასი:</label>
+        <select class="form-control" id="id_dnd_class" name="dnd_class" required>
+            {% for dnd_class in classes %}
+            <option value="{{ dnd_class.id }}">{{ dnd_class.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="id_subclass">ქვეკლასი:</label>
+        <select class="form-control" id="id_subclass" name="subclass">
+            {% for subclass in subclasses %}
+            <option value="{{ subclass.id }}">{{ subclass.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="id_level">დონე:</label>
+        <input type="number" class="form-control" id="id_level" name="level" min="1" value="1" required>
+    </div>
+
+    <div class="form-group">
+        <label for="id_alignment">მორალი:</label>
+        <input type="text" class="form-control" id="id_alignment" name="alignment" maxlength="50" required>
+    </div>
+
+    <button type="button" class="btn btn-secondary" id="roll-ability-scores">გააგორე მონაცემები</button>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="id_strength">სიძლიერე</label>
+                <input type="number" class="form-control ability-score" id="id_strength" name="strength" min="0" required>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="id_dexterity">მოხერხებულობა</label>
+                <input type="number" class="form-control ability-score" id="id_dexterity" name="dexterity" min="0" required>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="id_constitution">გამძლეობა</label>
+                <input type="number" class="form-control ability-score" id="id_constitution" name="constitution" min="0" required>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="id_intelligence">ინტელექტი</label>
+                <input type="number" class="form-control ability-score" id="id_intelligence" name="intelligence" min="0" required>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="id_wisdom">სიბრძნე</label>
+                <input type="number" class="form-control ability-score" id="id_wisdom" name="wisdom" min="0" required>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="id_charisma">ქარიზმა</label>
+                <input type="number" class="form-control ability-score" id="id_charisma" name="charisma" min="0" required>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">შექმენი პერსონაჟი</button>
+</form>
+
+<script>
+    // Function to roll 4d6 and drop the lowest
+    function rollAbilityScore() {
+        let rolls = [];
+        for (let i = 0; i < 4; i++) {
+            rolls.push(Math.floor(Math.random() * 6) + 1);
+        }
+        rolls.sort((a, b) => a - b);
+        rolls.shift(); // Drop the lowest roll
+        return rolls.reduce((total, current) => total + current, 0);
+    }
+
+    // Function to roll ability scores for the character
+    function rollAbilityScores() {
+        // Remove any existing rolled scores
+        let oldScores = document.querySelectorAll('.ability-score-rolled');
+        oldScores.forEach(score => score.remove());
+
+        let abilityInputs = document.querySelectorAll('.ability-score');
+        abilityInputs.forEach(input => {
+            let rolledScore = rollAbilityScore();
+            input.value = rolledScore; // Set input value to rolled score
+            input.insertAdjacentHTML('afterend', `<span class="ability-score-rolled">${rolledScore}</span>`); // Display rolled score beside input
+        });
+    }
+
+    // Roll ability scores when the button is clicked
+    document.getElementById('roll-ability-scores').addEventListener('click', rollAbilityScores);
+</script>
+
+
+{% endblock %}
