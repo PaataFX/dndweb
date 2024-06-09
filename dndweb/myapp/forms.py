@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
+from .models import Character  # Ensure models import doesn't cause a circular dependency
 
 User = get_user_model()
 
@@ -26,11 +27,8 @@ class MyUserCreationForm(UserCreationForm):
     password2 = forms.CharField(label="გაიმეორე პაროლი", widget=forms.PasswordInput, help_text="Enter the same password as before, for verification.")
 
     class Meta:
-        model = User  # Use the custom user model
+        model = User
         fields = ['username', 'email', 'password1', 'password2']
-        
-
-from .models import Character
 
 class CustomCharacterForm(forms.ModelForm):
     class Meta:

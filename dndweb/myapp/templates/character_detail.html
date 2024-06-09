@@ -10,7 +10,8 @@
 
 <body>
     {% include 'navbar.html' %}
-    <form class="charsheet">
+    <form method="POST" class="charsheet" enctype="multipart/form-data" action="{% url 'character_detail' character.id %}">
+        {% csrf_token %}
         <header>
             <section class="charname">
             <label for="charname">სახელი</label>
@@ -117,19 +118,21 @@
                             <input name="proficiencybonus" value="{{ character.proficiency_bonus }}" />
                         </div>
                     <!-- Saving Throws -->
-                        <div class="saves list-section box">
-                            <ul>
-                                <!-- Loop through saving throws -->
-                                {% for saving_throw in character.saving_throws.all %}
-                                <li>
-                                    <label for="{{ saving_throw.name }}-save">{{ saving_throw.name }}</label><input name="{{ saving_throw.name }}-save" value="{{ saving_throw.value }}" type="text" /><input name="{{ saving_throw.name }}-save-prof" type="checkbox" {% if saving_throw.proficient %}checked{% endif %} />
-                                </li>
-                                {% endfor %}
-                            </ul>
-                            <div class="label">
+                    <div class="saves list-section box">
+                        <ul>
+                            <!-- Loop through saving throws -->
+                            {% for saving_throw in saving_throws %}
+                            <li>
+                                <label for="{{ saving_throw.name }}-save">{{ saving_throw.name }}</label>
+                                <input name="{{ saving_throw.name }}-save" id="{{ saving_throw.name }}-save" type="text" readonly />
+                                <input name="{{ saving_throw.name }}-save-prof" id="{{ saving_throw.name }}-save-prof" type="checkbox" />
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <div class="label">
                             საპასუხო გაგორებები
-                            </div>
                         </div>
+                    </div>
                     <!-- Skills -->
                     <div class="skills list-section box">
                         <ul>
@@ -301,6 +304,7 @@
                 </div>
             </section>
         </main>
+        <button type="submit">Update Character</button>
     </form>
 </body>
 <script>
@@ -357,6 +361,43 @@
         // Update the skill input field with the calculated skill modifier
         skillInput.value = skillModifier >= 0 ? '+' + skillModifier : skillModifier;
     }
+    const savingThrows = [
+        'Strength', 'Dexterity', 'Constitution', 'Wisdom', 'Intelligence', 'Charisma'
+    ];
+
+    savingThrows.forEach(function(saveName) {
+        const saveInput = document.getElementById(saveName + '-save');
+        const profCheckbox = document.getElementById(saveName + '-save-prof');
+
+        const baseModifier = calculateModifier(abilityScores[saveName]);
+
+        let saveModifier = baseModifier;
+
+        if (profCheckbox.checked) {
+            saveModifier += proficiencyBonus;
+        }
+
+        saveInput.value = saveModifier >= 0 ? '+' + saveModifier : saveModifier;
+    });
+
+    // Add event listeners to checkboxes to recalculate on change
+    savingThrows.forEach(function(saveName) {
+        const profCheckbox = document.getElementById(saveName + '-save-prof');
+
+        profCheckbox.addEventListener('change', function() {
+            const saveInput = document.getElementById(saveName + '-save');
+            const baseModifier = calculateModifier(abilityScores[saveName]);
+
+            let saveModifier = baseModifier;
+
+            if (profCheckbox.checked) {
+                saveModifier += proficiencyBonus;
+            }
+
+            saveInput.value = saveModifier >= 0 ? '+' + saveModifier : saveModifier;
+        });
+    });
+
 </script>
 
 

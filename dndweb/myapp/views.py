@@ -1,24 +1,31 @@
-from django.shortcuts import render
-from .models import Rarity, Armor, User, Property, Weapon, Tool, AbilityScore, Skill, SavingThrow, Class, Subclass, Race, Subrace, Spell, Language, Feat
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.db.models import Q
-from django.contrib.auth import authenticate, login, logout
-from .forms import MyUserCreationForm
-from .forms import CustomUserUpdateForm
-from.models import Character
-from django.shortcuts import get_object_or_404
+from django.core.files.storage import default_storage
+from django.conf import settings
 
-from .models import Race, Class, Spell
+from .models import (
+    Rarity, Armor, Property, Weapon, Tool, AbilityScore, Skill, SavingThrow, 
+    Class, Subclass, Race, Subrace, Spell, Language, Feat, Character, 
+    Proficiency, Equipment, Trait
+)
+from .forms import MyUserCreationForm, CustomUserUpdateForm, CustomCharacterForm
 
+User = get_user_model()
+
+# Utility functions
+def calculate_modifier(score):
+    return (score - 10) // 2
+
+# Main views
 def index(request):
     races = Race.objects.all()
     classes = Class.objects.all()
     spells = Spell.objects.all()
     return render(request, 'index.html', {'races': races, 'classes': classes, 'spells': spells})
-
 
 def home(request):
     races = Race.objects.all()
@@ -39,13 +46,7 @@ def armor_list(request):
         'no_weight_class_armors': no_weight_class_armors,
     })
 
-
-
-from django.contrib.auth import get_user_model
-User = get_user_model()
-
-
-
+# Authentication views
 def loginPage(request):
     page = 'login'
     if request.user.is_authenticated:
@@ -56,16 +57,16 @@ def loginPage(request):
         password = request.POST.get('password')
 
         if username:
-            username = username.lower()  # Normalize the username to lowercase
+            username = username.lower()
             user = authenticate(request, username=username, password=password)
 
             if user is not None:
                 login(request, user)
                 return redirect('home')
             else:
-                messages.error(request, 'სახელი ან პაროლი არ არსებობს')
+                messages.error(request, 'Invalid username or password')
         else:
-            messages.error(request, 'საჭიროა სახელი.')
+            messages.error(request, 'Username is required.')
 
     context = {'page': page}
     return render(request, 'base/login_register.html', context)
@@ -81,7 +82,7 @@ def registerPage(request):
         form = MyUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.username = user.username.lower()  # Normalize the username to lowercase
+            user.username = user.username.lower()
             user.save()
             login(request, user)
             return redirect('home')
@@ -96,12 +97,6 @@ def registerPage(request):
 @login_required
 def userProfile(request):
     return render(request, 'user_profile.html')
-
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.core.files.storage import default_storage
-from django.conf import settings
 
 @login_required
 def update_profile(request):
@@ -127,35 +122,92 @@ def update_profile(request):
     else:
         return render(request, 'user_profile.html')
 
-
-
-
-
-
-
-from django.shortcuts import render, redirect
-from .models import Character
-
+# Character views
+@login_required
 def character_list(request):
-    if request.user.is_authenticated:
-        characters = Character.objects.filter(player=request.user)  # Use 'player' instead of 'user'
-        context = {'characters': characters}
-        return render(request, 'character_list.html', context)
-    else:
-        return redirect('login')
-
-
-from django.shortcuts import render, get_object_or_404
-from .models import Character
+    characters = Character.objects.filter(player=request.user)
+    return render(request, 'character_list.html', {'characters': characters})
 
 def character_detail(request, character_id):
     character = get_object_or_404(Character, pk=character_id)
     return render(request, 'character_detail.html', {'character': character})
 
+def character_detail(request, character_id):
+    character = get_object_or_404(Character, id=character_id)
 
-from django.shortcuts import render, redirect
-from .forms import CustomCharacterForm
-from .models import Race, Subrace, Class, Subclass, SavingThrow, Skill, Language, Proficiency, Equipment, Spell, Trait
+    if request.method == 'POST':
+        # Update character attributes based on submitted form data
+        character.name = request.POST.get('charname', character.name)
+        class_level = request.POST.get('classlevel', f"{character.dnd_class.name} {character.level}").split()
+        if len(class_level) > 1:
+            character.dnd_class.name = class_level[0]
+            character.level = class_level[1]
+        character.subclass = request.POST.get('subclass', character.subclass)
+        character.player = request.POST.get('playername', character.player)
+        race_subrace = request.POST.get('race', f"{character.race} - {character.subrace}").split('-')
+        if len(race_subrace) > 1:
+            character.race = race_subrace[0].strip()
+            character.subrace = race_subrace[1].strip()
+        character.alignment = request.POST.get('alignment', character.alignment)
+        character.experience_points = request.POST.get('experiencepoints', character.experience_points)
+        
+        character.strength = request.POST.get('Strengthscore', character.strength)
+        character.dexterity = request.POST.get('Dexterityscore', character.dexterity)
+        character.constitution = request.POST.get('Constitutionscore', character.constitution)
+        character.wisdom = request.POST.get('Wisdomscore', character.wisdom)
+        character.intelligence = request.POST.get('Intelligencescore', character.intelligence)
+        character.charisma = request.POST.get('Charismascore', character.charisma)
+
+        character.inspiration = 'inspiration' in request.POST
+        character.proficiency_bonus = request.POST.get('proficiencybonus', character.proficiency_bonus)
+        
+        character.passive_perception = request.POST.get('passiveperception', character.passive_perception)
+        character.other_proficiencies = request.POST.get('otherprofs', character.other_proficiencies)
+
+        character.armor_class = request.POST.get('ac', character.armor_class)
+        character.initiative = request.POST.get('initiative', character.initiative)
+        character.speed = request.POST.get('speed', character.speed)
+        character.max_hit_points = request.POST.get('maxhp', character.max_hit_points)
+        character.hit_points = request.POST.get('currenthp', character.hit_points)
+        character.temporary_hit_points = request.POST.get('temphp', character.temporary_hit_points)
+        character.hit_dice_total = request.POST.get('totalhd', character.hit_dice_total)
+        character.hit_dice_remaining = request.POST.get('remaininghd', character.hit_dice_remaining)
+        character.death_saves_successes = sum(1 for i in range(1, 4) if f'deathsuccess{i}' in request.POST)
+        character.death_saves_failures = sum(1 for i in range(1, 4) if f'deathfail{i}' in request.POST)
+
+        character.cp = request.POST.get('cp', character.cp)
+        character.sp = request.POST.get('sp', character.sp)
+        character.ep = request.POST.get('ep', character.ep)
+        character.gp = request.POST.get('gp', character.gp)
+        character.pp = request.POST.get('pp', character.pp)
+
+        character.personality = request.POST.get('personality', character.personality)
+        character.ideals = request.POST.get('ideals', character.ideals)
+        character.bonds = request.POST.get('bonds', character.bonds)
+        character.flaws = request.POST.get('flaws', character.flaws)
+        character.features = request.POST.get('features', character.features)
+
+        character.equipment_list = request.POST.get('equipment_list', character.equipment_list)
+        character.attacks_description = request.POST.get('attacks_description', character.attacks_description)
+        
+        # Update attacks and spellcasting
+        for i, attack in enumerate(character.attacks.all()):
+            attack.name = request.POST.get(f'atkname{i + 1}', attack.name)
+            attack.attack_bonus = request.POST.get(f'atkbonus{i + 1}', attack.attack_bonus)
+            attack.damage_type = request.POST.get(f'atkdamage{i + 1}', attack.damage_type)
+            attack.save()
+        
+        character.save()
+        
+        return redirect('character_sheet', character_id=character.id)
+    
+    context = {
+        'character': character,
+        'proficiency_bonus': character.proficiency_bonus,
+        'saving_throws': character.get_saving_throws(),  # Assuming you have this method in your model
+        'skills': character.get_skills()  # Assuming you have this method in your model
+    }
+    return render(request, 'character_detail.html', context)
 
 def create_character(request):
     if request.method == 'POST':
@@ -163,7 +215,6 @@ def create_character(request):
         if form.is_valid():
             character = form.save(commit=False)
             character.player = request.user
-            # Ensure default values for optional fields if not provided
             if not character.hit_points:
                 character.hit_points = 10
             if not character.max_hit_points:
@@ -193,7 +244,7 @@ def create_character(request):
         'classes': Class.objects.all(),
         'subclasses': Subclass.objects.all(),
         'saving_throws': SavingThrow.objects.all(),
-        'skills': Skill.objects.all(),  # Fixed typo
+        'skills': Skill.objects.all(),
         'languages': Language.objects.all(),
         'proficiencies': Proficiency.objects.all(),
         'equipment': Equipment.objects.all(),
@@ -202,61 +253,35 @@ def create_character(request):
     }
     return render(request, 'create_character.html', context)
 
-from django.shortcuts import render, get_object_or_404
-from .models import Character  # Assuming you have a Character model
-
-def character_detail(request, character_id):
-    character = get_object_or_404(Character, pk=character_id)
-    return render(request, 'character_detail.html', {'character': character})
-
-
-from django.shortcuts import render
-from .models import Character
-
-
-from .models import Race
-
+# Race views
 def races_page(request):
-    races = Race.objects.all()  # Assuming Race is the name of your model for races
+    races = Race.objects.all()
     return render(request, 'races_page.html', {'races': races})
-
 
 def race_detail(request, race_id):
     race = get_object_or_404(Race, pk=race_id)
     return render(request, 'race_detail.html', {'race': race})
 
-from .models import Class
-
+# Class views
 def classes_page(request):
     classes = Class.objects.all()
     return render(request, 'classes_page.html', {'classes': classes})
-
-
-from .models import Class
 
 def class_detail(request, class_id):
     class_obj = get_object_or_404(Class, pk=class_id)
     return render(request, 'class_detail.html', {'class_obj': class_obj})
 
-from .models import Spell
-
+# Spell views
 def spells_page(request):
     spells = Spell.objects.all()
-    # Get unique spell levels
     levels = set(spell.level for spell in spells)
     return render(request, 'spells_page.html', {'spells': spells, 'levels': sorted(levels)})
 
-
-# views.py
-from django.shortcuts import render
-from .models import Skill, Character
-
-def calculate_modifier(score):
-    return (score - 10) // 2
-
+# Character detail with additional calculations
 def character_detail(request, character_id):
-    character = Character.objects.get(pk=character_id)
+    character = get_object_or_404(Character, pk=character_id)
     skills = Skill.objects.all()
+    saving_throws = SavingThrow.objects.all()
     proficiency_bonus = character.proficiency_bonus
     ability_modifiers = {
         'Strength': calculate_modifier(character.strength),
@@ -266,10 +291,6 @@ def character_detail(request, character_id):
         'Intelligence': calculate_modifier(character.intelligence),
         'Charisma': calculate_modifier(character.charisma),
     }
-    
-    # Add calculated ability modifiers to the ability_modifiers dictionary
-    for ability, score in ability_modifiers.items():
-        ability_modifiers[ability] = calculate_modifier(score)
 
     return render(request, 'character_detail.html', {
         'character': character,
@@ -277,4 +298,3 @@ def character_detail(request, character_id):
         'proficiency_bonus': proficiency_bonus,
         'ability_modifiers': ability_modifiers,
     })
-

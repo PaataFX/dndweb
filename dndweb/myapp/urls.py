@@ -21,5 +21,6 @@ urlpatterns = [
     path('classes/', views.classes_page, name='classes_page'),
     path('classes/<int:class_id>/', views.class_detail, name='class_detail'),
     path('spells/', views.spells_page, name='spells_page'),
+    path('character/<int:character_id>/', views.character_detail, name='character_detail'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
