@@ -2,7 +2,7 @@
 <html>
 <head>
     {% load static %}
-    <title>{{ character.name }} Character Sheet</title>
+    <title>{{ character.name }} ფურცელი</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'css/charactersheet.css' %}">
@@ -13,28 +13,28 @@
     <form class="charsheet">
         <header>
             <section class="charname">
-            <label for="charname">Character Name</label>
+            <label for="charname">სახელი</label>
             <input name="charname" value="{{ character.name }}" />
             </section>
             <section class="misc">
                 <ul>
                     <li>
-                        <label for="classlevel">Class & Level</label><input name="classlevel" value="{{ character.dnd_class.name }} {{ character.level }}" />
+                        <label for="classlevel">კლასი და დონე</label><input name="classlevel" value="{{ character.dnd_class.name }} {{ character.level }}" />
                     </li>
                     <li>
-                        <label for="background">Background</label><input name="background" value="{{ character.background }}" />
+                        <label for="background">ქვეკლასი</label><input name="subclass" value="{{ character.subclass }}" />
                     </li>
                     <li>
-                        <label for="playername">Player Name</label><input name="playername" value="{{ character.player }}" />
+                        <label for="playername">მოთამაშე</label><input name="playername" value="{{ character.player }}" />
                     </li>
                     <li>
-                        <label for="race">Race</label><input name="race" value="{{ character.race }}" />
+                        <label for="racesubrace">რასა - ქვერასა</label><input name="race" value="{{ character.race }} - {{character.subrace}}" />
                     </li>
                     <li>
-                        <label for="alignment">Alignment</label><input name="alignment" value="{{ character.alignment }}" />
+                        <label for="alignment">მორალი</label><input name="alignment" value="{{ character.alignment }}" />
                     </li>
                     <li>
-                        <label for="experiencepoints">Experience Points</label><input name="experiencepoints" value="{{ character.experience_points }}" />
+                        <label for="experiencepoints">დრაკონის ეშვი</label><input name="experiencepoints" value="{{ character.experience_points }}" />
                     </li>
                 </ul>
             </section>
@@ -46,50 +46,56 @@
                         <ul>
                             <li>
                                 <div class="score">
-                                    <label for="Strengthscore">Strength</label><input name="Strengthscore" value="{{ character.strength }}" />
+                                    <label for="Strengthscore">სიძლიერე</label>
+                                    <input id="Strengthscore" name="Strengthscore" value="{{ character.strength }}" />
                                 </div>
                                 <div class="modifier">
-                                    <input name="Strengthmod" value="{{ character.strength_modifier }}" />
+                                    <input id="Strengthmod" name="Strengthmod" value="" readonly />
                                 </div>
                             </li>
                             <li>
                                 <div class="score">
-                                    <label for="Dexterityscore">Dexterity</label><input name="Dexterityscore" value="{{ character.dexterity }}" />
+                                    <label for="Dexterityscore">მოხერხებულობა</label>
+                                    <input id="Dexterityscore" name="Dexterityscore" value="{{ character.dexterity }}" />
                                 </div>
                                 <div class="modifier">
-                                    <input name="Dexteritymod" value="{{ character.dexterity_modifier }}" />
+                                    <input id="Dexteritymod" name="Dexteritymod" value="" readonly />
                                 </div>
                             </li>
                             <li>
                                 <div class="score">
-                                    <label for="Constitutionscore">Constitution</label><input name="Constitutionscore" value="{{ character.constitution }}" />
+                                    <label for="Constitutionscore">გამძლეობა</label>
+                                    <input id="Constitutionscore" name="Constitutionscore" value="{{ character.constitution }}" />
                                 </div>
                                 <div class="modifier">
-                                    <input name="Constitutionmod" value="{{ character.constitution_modifier }}" />
+                                    <input id="Constitutionmod" name="Constitutionmod" value="" readonly />
                                 </div>
                             </li>
                             <li>
                                 <div class="score">
-                                    <label for="Wisdomscore">Wisdom</label><input name="Wisdomscore" value="{{ character.wisdom }}" />
+                                    <label for="Wisdomscore">სიბრძნე</label>
+                                    <input id="Wisdomscore" name="Wisdomscore" value="{{ character.wisdom }}" />
                                 </div>
                                 <div class="modifier">
-                                    <input name="Wisdommod" value="{{ character.wisdom_modifier }}" />
+                                    <input id="Wisdommod" name="Wisdommod" value="" readonly />
                                 </div>
                             </li>
                             <li>
                                 <div class="score">
-                                    <label for="Intelligencescore">Intelligence</label><input name="Intelligencescore" value="{{ character.intelligence }}" />
+                                    <label for="Intelligencescore">ინტელექტი</label>
+                                    <input id="Intelligencescore" name="Intelligencescore" value="{{ character.intelligence }}" />
                                 </div>
                                 <div class="modifier">
-                                    <input name="Intelligencemod" value="{{ character.intelligence_modifier }}" />
+                                    <input id="Intelligencemod" name="Intelligencemod" value="" readonly />
                                 </div>
                             </li>
                             <li>
                                 <div class="score">
-                                    <label for="Charismascore">Charisma</label><input name="Charismascore" value="{{ character.charisma }}" />
+                                    <label for="Charismascore">ქარიზმა</label>
+                                    <input id="Charismascore" name="Charismascore" value="{{ character.charisma }}" />
                                 </div>
                                 <div class="modifier">
-                                    <input name="Charismamod" value="{{ character.charisma_modifier }}" />
+                                    <input id="Charismamod" name="Charismamod" value="" readonly />
                                 </div>
                             </li>
                         </ul>
@@ -99,14 +105,14 @@
                     <!-- Inspiration -->
                         <div class="inspiration box">
                             <div class="label-container">
-                                <label for="inspiration">Inspiration</label>
+                                <label for="inspiration">ინსპირაცია</label>
                             </div>
                             <input name="inspiration" type="checkbox" {% if character.inspiration %}checked{% endif %} />
                         </div>
                     <!-- Proficiency Bonus -->
                         <div class="proficiencybonus box">
                             <div class="label-container">
-                                <label for="proficiencybonus">Proficiency Bonus</label>
+                                <label for="proficiencybonus">გაწაფულობის ბონუსი</label>
                             </div>
                             <input name="proficiencybonus" value="{{ character.proficiency_bonus }}" />
                         </div>
@@ -121,33 +127,34 @@
                                 {% endfor %}
                             </ul>
                             <div class="label">
-                            Saving Throws
+                            საპასუხო გაგორებები
                             </div>
                         </div>
                     <!-- Skills -->
                     <div class="skills list-section box">
                         <ul>
-                            <!-- Loop through skills -->
-                            {% for skill in character.skills.all %}
+                            {% for skill in skills %}
                             <li>
-                                <label for="{{ skill.name }}">{{ skill.name }}</label><input name="{{ skill.name }}" value="{{ skill.value }}" type="text" /><input name="{{ skill.name }}-prof" type="checkbox" {% if skill.proficient %}checked{% endif %} />
+                                <label for="{{ skill.name }}">{{ skill.name }} ({{ skill.ability_score.name|slice:":3"|upper }})</label>
+                                <input id="{{ skill.name }}-prof" name="{{ skill.name }}-prof" type="checkbox" onclick="updateSkill('{{ skill.name }}')" />
+                                <input id="{{ skill.name }}-expert" name="{{ skill.name }}-expert" type="checkbox" onclick="updateSkill('{{ skill.name }}')" />
+                                <input id="{{ skill.name }}" name="{{ skill.name }}" value="" type="text" readonly />
                             </li>
                             {% endfor %}
                         </ul>
-                        <div class="label">
-                            Skills
-                        </div>
+                        <div class="label">უნარები</div>
                     </div>
+                    
                     
                     <div class="passive-perception box">
                         <div class="label-container">
-                            <label for="passiveperception">Passive Wisdom (Perception)</label>
+                            <label for="passiveperception">პასიური სიბრძნე (აღქმა)</label>
                         </div>
                         <input name="passiveperception" value="{{ character.passive_perception }}" />
                         </div>
                         <!-- Other Proficiencies and Languages -->
                         <div class="otherprofs box textblock">
-                        <label for="otherprofs">Other Proficiencies and Languages</label>
+                        <label for="otherprofs">სხვა გაწაფულობები და ენები</label>
                         <textarea name="otherprofs">{{ character.other_proficiencies }}</textarea>
                     </div>
                 </div>
@@ -159,43 +166,43 @@
                 <!-- Armor Class -->
                 <div class="armorclass">
                     <div>
-                        <label for="ac">Armor Class</label><input name="ac" value="{{ character.armor_class }}" />
+                        <label for="ac">აბჯრის კლასი (AC)</label><input name="ac" value="{{ character.armor_class }}" />
                     </div>
                 </div>
                 <!-- Initiative -->
                 <div class="initiative">
                     <div>
-                        <label for="initiative">Initiative</label><input name="initiative" value="{{ character.initiative }}" />
+                        <label for="initiative">ინიციატივა</label><input name="initiative" value="{{ character.initiative }}" />
                     </div>
                 </div>
                 <!-- Speed -->
                 <div class="speed">
                     <div>
-                        <label for="speed">Speed</label><input name="speed" value="{{ character.speed }}" />
+                        <label for="speed">სისწრაფე</label><input name="speed" value="{{ character.speed }}" />
                     </div>
                 </div>
                 <!-- Hit Points -->
                 <div class="hp">
                     <div class="regular">
                         <div class="max">
-                            <label for="maxhp">Hit Point Maximum</label><input name="maxhp" value="{{ character.max_hit_points }}" />
+                            <label for="maxhp">სიცოცხლის მაქსიმუმი</label><input name="maxhp" value="{{ character.max_hit_points }}" />
                         </div>
                         <div class="current">
-                            <label for="currenthp">Current Hit Points</label><input name="currenthp" value="{{ character.hit_points }}" />
+                            <label for="currenthp">ახლანდელი სიცოცხლე</label><input name="currenthp" value="{{ character.hit_points }}" />
                         </div>
                     </div>
                     <div class="temporary">
-                        <label for="temphp">Temporary Hit Points</label><input name="temphp" value="{{ character.temporary_hit_points }}" />
+                        <label for="temphp">დროებითი სიცოცხლე</label><input name="temphp" value="{{ character.temporary_hit_points }}" />
                     </div>
                 </div>
                 <!-- Hit Dice -->
                 <div class="hitdice">
                     <div>
                         <div class="total">
-                            <label for="totalhd">Total Hit Dice</label><input name="totalhd" value="{{ character.hit_dice_total }}" />
+                            <label for="totalhd">სიცოცხლის კამათელი</label><input name="totalhd" value="{{ character.hit_dice_total }}" />
                         </div>
                         <div class="remaining">
-                            <label for="remaininghd">Remaining Hit Dice</label><input name="remaininghd" value="{{ character.hit_dice_remaining }}" />
+                            <label for="remaininghd">დარჩენილი </label><input name="remaininghd" value="{{ character.hit_dice_remaining }}" />
                         </div>
                     </div>
                 </div>
@@ -203,11 +210,11 @@
                 <div class="deathsaves">
                     <div>
                         <div class="label">
-                        <label>Death Saves</label>
+                        <label>სასიკვდილო</label>
                         </div>
                         <div class="marks">
                             <div class="deathsuccesses">
-                                <label>Successes</label>
+                                <label>წარმატება</label>
                                 <div class="bubbles">
                                     <!-- Checkboxes for success marks -->
                                     <input name="deathsuccess1" type="checkbox" {% if character.death_saves_successes >= 1 %}checked{% endif %} />
@@ -216,7 +223,7 @@
                                 </div>
                             </div>
                             <div class="deathfails">
-                                <label>Failures</label>
+                                <label>ჩაფლავება</label>
                                 <div class="bubbles">
                                     <!-- Checkboxes for failure marks -->
                                     <input name="deathfail1" type="checkbox" {% if character.death_saves_failures >= 1 %}checked{% endif %} />
@@ -230,13 +237,13 @@
             </section>
             <section class="attacksandspellcasting">
                 <div>
-                    <label>Attacks & Spellcasting</label>
+                    <label>შეტევა & შელოცვა</label>
                     <table>
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Attack Bonus</th>
-                                <th>Damage/Type</th>
+                                <th>სახელი</th>
+                                <th>ბონუსი</th>
+                                <th>ზიანი/ტიპი</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -256,7 +263,7 @@
 
             <section class="equipment">
                 <div>
-                    <label>Equipment</label>
+                    <label>აღჭურვილობა</label>
                     <div class="money">
                         <ul>
                             <li><label for="cp">cp</label><input name="cp" value="{{ character.cp }}" /></li>
@@ -271,29 +278,87 @@
             </section>
             <section class="flavor">
                 <div class="personality">
-                    <label for="personality">Personality</label>
+                    <label for="personality">პიროვნება</label>
                     <textarea name="personality">{{ character.personality }}</textarea>
                 </div>
                 <div class="ideals">
-                    label for="ideals">Ideals</label>
+                    <label for="ideals">იდეალები</label>
                     <textarea name="ideals">{{ character.ideals }}</textarea>
                 </div>
                 <div class="bonds">
-                    <label for="bonds">Bonds</label>
+                    <label for="bonds">კავშირები</label>
                     <textarea name="bonds">{{ character.bonds }}</textarea>
                 </div>
                 <div class="flaws">
-                    <label for="flaws">Flaws</label>
+                    <label for="flaws">ნაკლები</label>
                     <textarea name="flaws">{{ character.flaws }}</textarea>
                 </div>
             </section>
             <section class="features">
                 <div>
-                    <label for="features">Features & Traits</label>
+                    <label for="features">უნარები & თვისებები</label>
                     <textarea name="features">{{ character.features }}</textarea>
                 </div>
             </section>
         </main>
     </form>
 </body>
+<script>
+    function calculateModifier(score) {
+        return Math.floor((score - 10) / 2);
+    }
+
+    const proficiencyBonus = {{ proficiency_bonus }};
+    const abilityScores = {
+        'Strength': {{ character.strength }},
+        'Dexterity': {{ character.dexterity }},
+        'Constitution': {{ character.constitution }},
+        'Wisdom': {{ character.wisdom }},
+        'Intelligence': {{ character.intelligence }},
+        'Charisma': {{ character.charisma }}
+    };
+
+    const abilityModifiers = {};
+    // Calculate and display ability score modifiers
+    for (const ability in abilityScores) {
+        const scoreInput = document.getElementById(ability + 'score');
+        const modifierInput = document.getElementById(ability + 'mod');
+
+        if (scoreInput && modifierInput) {
+            const score = parseInt(scoreInput.value, 10);
+            if (!isNaN(score)) {
+                const modifier = calculateModifier(score);
+                abilityModifiers[ability] = modifier;
+                modifierInput.value = modifier >= 0 ? '+' + modifier : modifier;
+            } else {
+                modifierInput.value = '';
+            }
+        }
+    }
+
+    function updateSkill(skillName, abilityScore) {
+        const profCheckbox = document.getElementById(skillName + '-prof');
+        const expertCheckbox = document.getElementById(skillName + '-expert');
+        const skillInput = document.getElementById(skillName);
+    
+        // Retrieve the ability score from the character's ability scores object
+        const baseModifier = calculateModifier(abilityScores[abilityScore]);
+    
+        // Calculate the skill modifier based on proficiency and expertise
+        let skillModifier = baseModifier;
+    
+        if (profCheckbox.checked) {
+            skillModifier += proficiencyBonus;
+        }
+        if (expertCheckbox.checked) {
+            skillModifier += proficiencyBonus * 2;  // Double proficiency bonus for expertise
+        }
+    
+        // Update the skill input field with the calculated skill modifier
+        skillInput.value = skillModifier >= 0 ? '+' + skillModifier : skillModifier;
+    }
+</script>
+
+
+
 </html>

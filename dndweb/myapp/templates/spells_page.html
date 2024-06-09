@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Spells
+შელოცვები
 {% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1>Spells</h1>
+    <h1>შელოცვები</h1>
     <div class="feature">
         <div class="row">
             <div class="col-lg-12">
@@ -25,12 +25,12 @@ Spells
                             <div class="list-pages-box">
                                 <table class="wiki-content-table">
                                     <tr>
-                                        <th>Spell Name</th>
-                                        <th>School</th>
-                                        <th>Casting Time</th>
-                                        <th>Range</th>
-                                        <th>Duration</th>
-                                        <th>Components</th>
+                                        <th>სახელი</th>
+                                        <th>სკოლა</th>
+                                        <th>შელოცვის დრო</th>
+                                        <th>რადიუსი</th>
+                                        <th>ხანგრძლივობა</th>
+                                        <th>კომპონენტები</th>
                                     </tr>
                                     {% for spell in spells %}
                                     {% if spell.level == level %}

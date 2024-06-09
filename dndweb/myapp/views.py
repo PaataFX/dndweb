@@ -39,8 +39,6 @@ def armor_list(request):
         'no_weight_class_armors': no_weight_class_armors,
     })
 
-def characters(request):
-    return render(request, 'charactersheet.html')
 
 
 from django.contrib.auth import get_user_model
@@ -215,13 +213,6 @@ def character_detail(request, character_id):
 from django.shortcuts import render
 from .models import Character
 
-def character_sheet(request):
-    # Retrieve character data from the database (assuming you want to display the first character)
-    character = Character.objects.first()  # You can customize this query as needed
-    
-    # Pass character data to the template
-    return render(request, 'character_sheet.html', {'character': character})
-
 
 from .models import Race
 
@@ -254,3 +245,36 @@ def spells_page(request):
     # Get unique spell levels
     levels = set(spell.level for spell in spells)
     return render(request, 'spells_page.html', {'spells': spells, 'levels': sorted(levels)})
+
+
+# views.py
+from django.shortcuts import render
+from .models import Skill, Character
+
+def calculate_modifier(score):
+    return (score - 10) // 2
+
+def character_detail(request, character_id):
+    character = Character.objects.get(pk=character_id)
+    skills = Skill.objects.all()
+    proficiency_bonus = character.proficiency_bonus
+    ability_modifiers = {
+        'Strength': calculate_modifier(character.strength),
+        'Dexterity': calculate_modifier(character.dexterity),
+        'Constitution': calculate_modifier(character.constitution),
+        'Wisdom': calculate_modifier(character.wisdom),
+        'Intelligence': calculate_modifier(character.intelligence),
+        'Charisma': calculate_modifier(character.charisma),
+    }
+    
+    # Add calculated ability modifiers to the ability_modifiers dictionary
+    for ability, score in ability_modifiers.items():
+        ability_modifiers[ability] = calculate_modifier(score)
+
+    return render(request, 'character_detail.html', {
+        'character': character,
+        'skills': skills,
+        'proficiency_bonus': proficiency_bonus,
+        'ability_modifiers': ability_modifiers,
+    })
+

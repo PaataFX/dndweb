@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Races
+რასები
 {% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1>Races</h1>
+    <h1>რასები</h1>
     {% for race in races %}
     <div>
         <h2><a href="{% url 'race_detail' race.id %}">{{ race.name }}</a></h2>
