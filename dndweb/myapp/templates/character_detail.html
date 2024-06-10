@@ -14,8 +14,8 @@
         {% csrf_token %}
         <header>
             <section class="charname">
-            <label for="charname">სახელი</label>
-            <input name="charname" value="{{ character.name }}" />
+                <label for="charname">სახელი</label>
+                <input name="charname" value="{{ character.name }}" />
             </section>
             <section class="misc">
                 <ul>
@@ -101,183 +101,179 @@
                             </li>
                         </ul>
                     </div>
-                </div>
                     <div class="attr-applications">
-                    <!-- Inspiration -->
+                        <!-- Inspiration -->
                         <div class="inspiration box">
                             <div class="label-container">
                                 <label for="inspiration">ინსპირაცია</label>
                             </div>
                             <input name="inspiration" type="checkbox" {% if character.inspiration %}checked{% endif %} />
                         </div>
-                    <!-- Proficiency Bonus -->
+                        <!-- Proficiency Bonus -->
                         <div class="proficiencybonus box">
                             <div class="label-container">
                                 <label for="proficiencybonus">გაწაფულობის ბონუსი</label>
                             </div>
                             <input name="proficiencybonus" value="{{ character.proficiency_bonus }}" />
                         </div>
-                    <!-- Saving Throws -->
-                    <div class="saves list-section box">
-                        <ul>
-                            <!-- Loop through saving throws -->
-                            {% for saving_throw in saving_throws %}
-                            <li>
-                                <label for="{{ saving_throw.name }}-save">{{ saving_throw.name }}</label>
-                                <input name="{{ saving_throw.name }}-save" id="{{ saving_throw.name }}-save" type="text" readonly />
-                                <input name="{{ saving_throw.name }}-save-prof" id="{{ saving_throw.name }}-save-prof" type="checkbox" />
-                            </li>
-                            {% endfor %}
-                        </ul>
-                        <div class="label">
-                            საპასუხო გაგორებები
+                        <!-- Saving Throws -->
+                        <div class="saves list-section box">
+                            <ul>
+                                <!-- Loop through saving throws -->
+                                {% for saving_throw in saving_throws %}
+                                <li>
+                                    <label for="{{ saving_throw.name }}-save">{{ saving_throw.name }}</label>
+                                    <input name="{{ saving_throw.name }}-save" id="{{ saving_throw.name }}-save" type="text" readonly />
+                                    <input name="{{ saving_throw.name }}-save-prof" id="{{ saving_throw.name }}-save-prof" type="checkbox" />
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <div class="label">
+                                საპასუხო გაგორებები
+                            </div>
+                        </div>
+                        <!-- Skills -->
+                        <div class="skills list-section box">
+                            <ul>
+                                {% for skill in skills %}
+                                <li>
+                                    <label for="{{ skill.name }}">{{ skill.name }} ({{ skill.ability_score.name|slice:":3"|upper }})</label>
+                                    <input id="{{ skill.name }}-prof" name="{{ skill.name }}-prof" type="checkbox" onclick="updateSkill('{{ skill.name }}')" />
+                                    <input id="{{ skill.name }}-expert" name="{{ skill.name }}-expert" type="checkbox" onclick="updateSkill('{{ skill.name }}')" />
+                                    <input id="{{ skill.name }}" name="{{ skill.name }}" value="" type="text" readonly />
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <div class="label">უნარები</div>
                         </div>
                     </div>
-                    <!-- Skills -->
-                    <div class="skills list-section box">
-                        <ul>
-                            {% for skill in skills %}
-                            <li>
-                                <label for="{{ skill.name }}">{{ skill.name }} ({{ skill.ability_score.name|slice:":3"|upper }})</label>
-                                <input id="{{ skill.name }}-prof" name="{{ skill.name }}-prof" type="checkbox" onclick="updateSkill('{{ skill.name }}')" />
-                                <input id="{{ skill.name }}-expert" name="{{ skill.name }}-expert" type="checkbox" onclick="updateSkill('{{ skill.name }}')" />
-                                <input id="{{ skill.name }}" name="{{ skill.name }}" value="" type="text" readonly />
-                            </li>
-                            {% endfor %}
-                        </ul>
-                        <div class="label">უნარები</div>
+                </section>
+                <div class="passive-perception box">
+                    <div class="label-container">
+                        <label for="passiveperception">პასიური სიბრძნე (აღქმა)</label>
                     </div>
-                    
-                    
-                    <div class="passive-perception box">
-                        <div class="label-container">
-                            <label for="passiveperception">პასიური სიბრძნე (აღქმა)</label>
-                        </div>
-                        <input name="passiveperception" value="{{ character.passive_perception }}" />
-                        </div>
-                        <!-- Other Proficiencies and Languages -->
-                        <div class="otherprofs box textblock">
-                        <label for="otherprofs">სხვა გაწაფულობები და ენები</label>
-                        <textarea name="otherprofs">{{ character.other_proficiencies }}</textarea>
-                    </div>
+                    <input name="passiveperception" value="{{ character.passive_perception }}" />
+                </div>
+                    <!-- Other Proficiencies and Languages -->
+                <div class="otherprofs box textblock">
+                    <label for="otherprofs">სხვა გაწაფულობები და ენები</label>
+                    <textarea name="otherprofs">{{ character.other_proficiencies }}</textarea>
                 </div>
             </section>
-
-
-
-            <section class="combat">
-                <!-- Armor Class -->
-                <div class="armorclass">
-                    <div>
-                        <label for="ac">აბჯრის კლასი (AC)</label><input name="ac" value="{{ character.armor_class }}" />
-                    </div>
-                </div>
-                <!-- Initiative -->
-                <div class="initiative">
-                    <div>
-                        <label for="initiative">ინიციატივა</label><input name="initiative" value="{{ character.initiative }}" />
-                    </div>
-                </div>
-                <!-- Speed -->
-                <div class="speed">
-                    <div>
-                        <label for="speed">სისწრაფე</label><input name="speed" value="{{ character.speed }}" />
-                    </div>
-                </div>
-                <!-- Hit Points -->
-                <div class="hp">
-                    <div class="regular">
-                        <div class="max">
-                            <label for="maxhp">სიცოცხლის მაქსიმუმი</label><input name="maxhp" value="{{ character.max_hit_points }}" />
-                        </div>
-                        <div class="current">
-                            <label for="currenthp">ახლანდელი სიცოცხლე</label><input name="currenthp" value="{{ character.hit_points }}" />
+            <section>
+                <section class="combat">
+                    <!-- Armor Class -->
+                    <div class="armorclass">
+                        <div>
+                            <label for="ac">აბჯრის კლასი (AC)</label><input name="ac" value="{{ character.armor_class }}" />
                         </div>
                     </div>
-                    <div class="temporary">
-                        <label for="temphp">დროებითი სიცოცხლე</label><input name="temphp" value="{{ character.temporary_hit_points }}" />
-                    </div>
-                </div>
-                <!-- Hit Dice -->
-                <div class="hitdice">
-                    <div>
-                        <div class="total">
-                            <label for="totalhd">სიცოცხლის კამათელი</label><input name="totalhd" value="{{ character.hit_dice_total }}" />
-                        </div>
-                        <div class="remaining">
-                            <label for="remaininghd">დარჩენილი </label><input name="remaininghd" value="{{ character.hit_dice_remaining }}" />
+                    <!-- Initiative -->
+                    <div class="initiative">
+                        <div>
+                            <label for="initiative">ინიციატივა</label><input name="initiative" value="{{ character.initiative }}" />
                         </div>
                     </div>
-                </div>
-                <!-- Death Saves -->
-                <div class="deathsaves">
-                    <div>
-                        <div class="label">
-                        <label>სასიკვდილო</label>
+                    <!-- Speed -->
+                    <div class="speed">
+                        <div>
+                            <label for="speed">სისწრაფე</label><input name="speed" value="{{ character.speed }}" />
                         </div>
-                        <div class="marks">
-                            <div class="deathsuccesses">
-                                <label>წარმატება</label>
-                                <div class="bubbles">
-                                    <!-- Checkboxes for success marks -->
-                                    <input name="deathsuccess1" type="checkbox" {% if character.death_saves_successes >= 1 %}checked{% endif %} />
-                                    <input name="deathsuccess2" type="checkbox" {% if character.death_saves_successes >= 2 %}checked{% endif %} />
-                                    <input name="deathsuccess3" type="checkbox" {% if character.death_saves_successes == 3 %}checked{% endif %} />
-                                </div>
+                    </div>
+                    <!-- Hit Points -->
+                    <div class="hp">
+                        <div class="regular">
+                            <div class="max">
+                                <label for="maxhp">სიცოცხლის მაქსიმუმი</label><input name="maxhp" value="{{ character.max_hit_points }}" />
                             </div>
-                            <div class="deathfails">
-                                <label>ჩაფლავება</label>
-                                <div class="bubbles">
-                                    <!-- Checkboxes for failure marks -->
-                                    <input name="deathfail1" type="checkbox" {% if character.death_saves_failures >= 1 %}checked{% endif %} />
-                                    <input name="deathfail2" type="checkbox" {% if character.death_saves_failures >= 2 %}checked{% endif %} />
-                                    <input name="deathfail3" type="checkbox" {% if character.death_saves_failures == 3 %}checked{% endif %} />
-                                </div>
+                            <div class="current">
+                                <label for="currenthp">ახლანდელი სიცოცხლე</label><input name="currenthp" value="{{ character.hit_points }}" />
+                            </div>
+                        </div>
+                        <div class="temporary">
+                            <label for="temphp">დროებითი სიცოცხლე</label><input name="temphp" value="{{ character.temporary_hit_points }}" />
+                        </div>
+                    </div>
+                    <!-- Hit Dice -->
+                    <div class="hitdice">
+                        <div>
+                            <div class="total">
+                                <label for="totalhd">სიცოცხლის კამათელი</label><input name="totalhd" value="{{ character.hit_dice_total }}" />
+                            </div>
+                            <div class="remaining">
+                                <label for="remaininghd">დარჩენილი </label><input name="remaininghd" value="{{ character.hit_dice_remaining }}" />
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <section class="attacksandspellcasting">
-                <div>
-                    <label>შეტევა & შელოცვა</label>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>სახელი</th>
-                                <th>ბონუსი</th>
-                                <th>ზიანი/ტიპი</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Loop through character's attacks and spellcasting -->
-                            {% for attack in character.attacks.all %}
-                            <tr>
-                                <td><input name="atkname{{ forloop.counter }}" type="text" value="{{ attack.name }}" /></td>
-                                <td><input name="atkbonus{{ forloop.counter }}" type="text" value="{{ attack.attack_bonus }}" /></td>
-                                <td><input name="atkdamage{{ forloop.counter }}" type="text" value="{{ attack.damage_type }}" /></td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    <textarea>{{ character.attacks_description }}</textarea>
-                </div>
-            </section>
-
-            <section class="equipment">
-                <div>
-                    <label>აღჭურვილობა</label>
-                    <div class="money">
-                        <ul>
-                            <li><label for="cp">cp</label><input name="cp" value="{{ character.cp }}" /></li>
-                            <li><label for="sp">sp</label><input name="sp" value="{{ character.sp }}" /></li>
-                            <li><label for="ep">ep</label><input name="ep" value="{{ character.ep }}" /></li>
-                            <li><label for="gp">gp</label><input name="gp" value="{{ character.gp }}" /></li>
-                            <li><label for="pp">pp</label><input name="pp" value="{{ character.pp }}" /></li>
-                        </ul>
+                    <!-- Death Saves -->
+                    <div class="deathsaves">
+                        <div>
+                            <div class="label">
+                                <label>სასიკვდილო</label>
+                            </div>
+                            <div class="marks">
+                                <div class="deathsuccesses">
+                                    <label>წარმატება</label>
+                                    <div class="bubbles">
+                                        <!-- Checkboxes for success marks -->
+                                        <input name="deathsuccess1" type="checkbox" {% if character.death_saves_successes >= 1 %}checked{% endif %} />
+                                        <input name="deathsuccess2" type="checkbox" {% if character.death_saves_successes >= 2 %}checked{% endif %} />
+                                        <input name="deathsuccess3" type="checkbox" {% if character.death_saves_successes == 3 %}checked{% endif %} />
+                                    </div>
+                                </div>
+                                <div class="deathfails">
+                                    <label>ჩაფლავება</label>
+                                    <div class="bubbles">
+                                        <!-- Checkboxes for failure marks -->
+                                        <input name="deathfail1" type="checkbox" {% if character.death_saves_failures >= 1 %}checked{% endif %} />
+                                        <input name="deathfail2" type="checkbox" {% if character.death_saves_failures >= 2 %}checked{% endif %} />
+                                        <input name="deathfail3" type="checkbox" {% if character.death_saves_failures == 3 %}checked{% endif %} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <textarea name="equipment_list">{{ character.equipment_list }}</textarea>
-                </div>
+                </section>
+                <section class="attacksandspellcasting">
+                    <div>
+                        <label>შეტევა & შელოცვა</label>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>სახელი</th>
+                                    <th>ბონუსი</th>
+                                    <th>ზიანი/ტიპი</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Loop through character's attacks and spellcasting -->
+                                {% for attack in character.attacks.all %}
+                                <tr>
+                                    <td><input name="atkname{{ forloop.counter }}" type="text" value="{{ attack.name }}" /></td>
+                                    <td><input name="atkbonus{{ forloop.counter }}" type="text" value="{{ attack.attack_bonus }}" /></td>
+                                    <td><input name="atkdamage{{ forloop.counter }}" type="text" value="{{ attack.damage_type }}" /></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <textarea>{{ character.attacks_description }}</textarea>
+                    </div>
+                </section>
+                <section class="equipment">
+                    <div>
+                        <label>აღჭურვილობა</label>
+                        <div class="money">
+                            <ul>
+                                <li><label for="cp">cp</label><input name="cp" value="{{ character.cp }}" /></li>
+                                <li><label for="sp">sp</label><input name="sp" value="{{ character.sp }}" /></li>
+                                <li><label for="ep">ep</label><input name="ep" value="{{ character.ep }}" /></li>
+                                <li><label for="gp">gp</label><input name="gp" value="{{ character.gp }}" /></li>
+                                <li><label for="pp">pp</label><input name="pp" value="{{ character.pp }}" /></li>
+                            </ul>
+                        </div>
+                        <textarea name="equipment_list">{{ character.equipment_list }}</textarea>
+                    </div>
+                </section>
             </section>
             <section class="flavor">
                 <div class="personality">

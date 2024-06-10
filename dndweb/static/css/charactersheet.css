@@ -1,5 +1,5 @@
 :root {
-  --sheet-width: 800px;
+  --sheet-width: 960px;
   --bg: white;
   --faded: #ddd;
   --faded-light: #eee;
@@ -94,7 +94,7 @@ form.charsheet label {
 
 form.charsheet header {
   display: flex;
-  align-contents: stretch;
+  align-content: stretch;
   align-items: stretch;
 }
 

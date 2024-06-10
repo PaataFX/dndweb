@@ -209,6 +209,17 @@ def character_detail(request, character_id):
     }
     return render(request, 'character_detail.html', context)
 
+from django.shortcuts import redirect
+
+@login_required
+def delete_character(request, character_id):
+    character = get_object_or_404(Character, pk=character_id)
+    if request.method == 'POST':
+        character.delete()
+        return redirect('character_list')
+    return render(request, 'character_detail.html', {'character': character})
+
+
 def create_character(request):
     if request.method == 'POST':
         form = CustomCharacterForm(request.POST)
@@ -298,3 +309,17 @@ def character_detail(request, character_id):
         'proficiency_bonus': proficiency_bonus,
         'ability_modifiers': ability_modifiers,
     })
+
+
+@login_required
+def character_list(request):
+    characters = Character.objects.all()
+    return render(request, 'character_list.html', {'characters': characters})
+
+@login_required
+def delete_character(request, character_id):
+    character = get_object_or_404(Character, pk=character_id)
+    if request.method == 'POST':
+        character.delete()
+        return redirect('characters')  # Update the URL name here
+    return render(request, 'character_detail.html', {'character': character})

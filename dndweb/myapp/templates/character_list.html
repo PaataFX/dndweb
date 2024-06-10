@@ -7,10 +7,9 @@
 <link rel="stylesheet" href="{% static 'css/character_list.css' %}">
 
 <div class="container">
-    <h2>{% trans "Characters" %}</h2>
 
     <a href="{% url 'create_character' %}">
-        <button class="btn btn-primary">{% trans "Create Character" %}</button>
+        <button class="btn btn-primary">{% trans "შექმენი პერსონაჟი" %}</button>
     </a>
 
     {% if characters %}
@@ -20,10 +19,18 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <h5 class="card-title">{{ character.name }}</h5>
-                            <p class="card-text">{% trans "Class" %}: {{ character.dnd_class.name }}</p>
-                            <p class="card-text">{% trans "Race" %}: {{ character.race.name }}</p>
-                            <p class="card-text">{% trans "Level" %}: {{ character.level }}</p>
-                            <a href="{% url 'character_detail' character.id %}" class="btn btn-info">{% trans "Details" %}</a>
+                            <p class="card-text">{% trans "კლასი" %}: {{ character.dnd_class.name }}</p>
+                            <p class="card-text">{% trans "რასა" %}: {{ character.race.name }}</p>
+                            <p class="card-text">{% trans "დონე" %}: {{ character.level }}</p>
+                            <a href="{% url 'character_detail' character.id %}" class="btn btn-info">{% trans "დეტალები" %}</a>
+
+                            <!-- Delete button form -->
+                            <form method="POST" action="{% url 'character_delete' character.id %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('{% trans "დარწმუნებული ხარ, რომ გინდა, წაშალო პერსონაჟი?" %}');">
+                                    {% trans "წაშლა" %}
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
