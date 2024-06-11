@@ -55,8 +55,8 @@
 
 .burger_bar li h3, .login_signup li a {
     font-family: "KA_LORTKIPANIDZE", sans-serif;
-    border: solid 2px #881919;
     border-radius: 15px;
+    background-color: #3d3c3c;
     margin: 0px 5px;
     transition: 0.5s;
     font-size: 18px;

@@ -7,6 +7,7 @@ import os, random
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.contrib.auth.models import Group, Permission
+from django.conf import settings
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email=None, password=None, **extra_fields):
@@ -29,8 +30,6 @@ class UserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True.')
 
         return self.create_user(username, email, password, **extra_fields)
-from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email, password=None, **extra_fields):
@@ -75,7 +74,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
-
 
 class Rarity(models.Model):
     NONE = "არცერთი"
@@ -199,11 +197,6 @@ class SavingThrow(models.Model):
     def __str__(self):
         return self.name
 
-
-
-
-from django.db import models
-
 class School(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True, null=True)
@@ -238,7 +231,6 @@ class Components(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class Spell(models.Model):
     name = models.CharField(max_length=100)
@@ -468,13 +460,6 @@ class Subclass(models.Model):
 
     def __str__(self):
         return self.name
-
-
-from django.conf import settings
-
-
-from django.db import models
-from django.contrib.auth.models import User
 
 class Character(models.Model):
     name = models.CharField(max_length=100)

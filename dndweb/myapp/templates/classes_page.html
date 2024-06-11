@@ -1,16 +1,22 @@
 {% extends 'base.html' %}
 
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
 {% block title %}
 კლასები
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>კლასები</h1>
-    <ul>
-        {% for class_obj in classes %}
-        <li><a href="{% url 'class_detail' class_obj.id %}">{{ class_obj.name }}</a></li>
-        {% endfor %}
-    </ul>
+<div class="container classes-container">
+    <h1 class="classes-title">კლასები</h1>
+    {% for class_obj in classes %}
+    <div class="class-item">
+        <h2><a href="{% url 'class_detail' class_obj.id %}" class="class-link">{{ class_obj.name }}</a></h2>
+        <p>{{ class_obj.description }}</p>
+    </div>
+    {% endfor %}
 </div>
 {% endblock %}

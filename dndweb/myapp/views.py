@@ -6,13 +6,15 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.db.models import Q
 from django.core.files.storage import default_storage
 from django.conf import settings
-
 from .models import (
     Rarity, Armor, Property, Weapon, Tool, AbilityScore, Skill, SavingThrow, 
     Class, Subclass, Race, Subrace, Spell, Language, Feat, Character, 
     Proficiency, Equipment, Trait
 )
 from .forms import MyUserCreationForm, CustomUserUpdateForm, CustomCharacterForm
+from django.shortcuts import redirect
+
+
 
 User = get_user_model()
 
@@ -26,12 +28,6 @@ def index(request):
     classes = Class.objects.all()
     spells = Spell.objects.all()
     return render(request, 'index.html', {'races': races, 'classes': classes, 'spells': spells})
-
-def home(request):
-    races = Race.objects.all()
-    classes = Class.objects.all()
-    spells = Spell.objects.all()
-    return render(request, 'home.html', {'races': races, 'classes': classes, 'spells': spells})
 
 def armor_list(request):
     light_armors = Armor.objects.filter(weight_class='Light')
@@ -73,7 +69,7 @@ def loginPage(request):
 
 def logoutUser(request):
     logout(request)
-    return redirect('home')
+    return redirect('/')
 
 def registerPage(request):
     form = MyUserCreationForm()
@@ -209,8 +205,6 @@ def character_detail(request, character_id):
     }
     return render(request, 'character_detail.html', context)
 
-from django.shortcuts import redirect
-
 @login_required
 def delete_character(request, character_id):
     character = get_object_or_404(Character, pk=character_id)
@@ -218,7 +212,6 @@ def delete_character(request, character_id):
         character.delete()
         return redirect('character_list')
     return render(request, 'character_detail.html', {'character': character})
-
 
 def create_character(request):
     if request.method == 'POST':
@@ -323,3 +316,23 @@ def delete_character(request, character_id):
         character.delete()
         return redirect('characters')  # Update the URL name here
     return render(request, 'character_detail.html', {'character': character})
+
+from .models import Spell
+
+def spell_list(request):
+    spells = Spell.objects.all()
+    levels = [spell.level for spell in spells]
+    levels = list(set(levels))  # Get unique levels
+    levels.sort()
+    context = {
+        'spells': spells,
+        'levels': levels
+    }
+    return render(request, 'spell_list.html', context)
+
+def spell_detail(request, spell_id):
+    spell = get_object_or_404(Spell, pk=spell_id)
+    context = {
+        'spell': spell
+    }
+    return render(request, 'spell_detail.html', context)

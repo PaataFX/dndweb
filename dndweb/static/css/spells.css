@@ -14,46 +14,6 @@ body, html {
     padding: 20px;
 }
 
-.index_section{
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    
-}
-
-/* Links */
-#races a,
-#classes a,
-#spells a {
-    color: inherit;
-    text-decoration: none;
-}
-
-/* Lists */
-#races ul,
-#classes ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    list-style: none;
-    padding: 0;
-}
-
-/* List items */
-#races li,
-#classes li {
-    margin-bottom: 10px;
-}
-
-/* Hover effect for links */
-#races a:hover,
-#classes a:hover,
-#spells a:hover {
-    color: #cccccc;
-    text-decoration: underline;
-}
-
-/* Additional styles for race details */
 .race-details-container {
     max-width: 800px;
     margin: 0 auto;
@@ -87,17 +47,23 @@ body, html {
     color: #fff2d6;
 }
 
-.trait {
-    margin-bottom: 15px;
+/* Style for the table */
+.spell-table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.trait-name {
+.spell-table th,
+.spell-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 2px solid #fff2d6;
+}
+
+.spell-table th {
     font-weight: bold;
     color: #fff2d6;
-}
-
-.trait-description {
-    color: #fff2d6;
+    background-color: #1a1a1a;
 }
 
 /* Responsive adjustments */
@@ -109,4 +75,6 @@ body, html {
     .race-details-title {
         font-size: 24px;
     }
+
+    /* Add responsive adjustments here if needed */
 }

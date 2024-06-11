@@ -1,67 +1,72 @@
 {% extends 'base.html' %}
 
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
 {% block title %}
 {{ class_obj.name }} Details
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>{{ class_obj.name }} Details</h1>
-    <div>
-        <p>Description: {{ class_obj.description }}</p>
-        <p>Hit Die: {{ class_obj.hit_die }}</p>
-        <p>Hit Points at 1st Level: {{ class_obj.hit_points_at_first_level }}</p>
-        <p>Hit Points at Higher Levels: {{ class_obj.hit_points_at_higher_levels }}</p>
-        <p>Saving Throw Proficiencies:
+<div class="container class-details-container">
+    <h1 class="class-details-title">{{ class_obj.name }} Details</h1>
+    <div class="class-details-content">
+        <p class="class-detail"><span class="class-detail-label">Description:</span> {{ class_obj.description }}</p>
+        <p class="class-detail"><span class="class-detail-label">Hit Die:</span> {{ class_obj.hit_die }}</p>
+        <p class="class-detail"><span class="class-detail-label">Hit Points at 1st Level:</span> {{ class_obj.hit_points_at_first_level }}</p>
+        <p class="class-detail"><span class="class-detail-label">Hit Points at Higher Levels:</span> {{ class_obj.hit_points_at_higher_levels }}</p>
+        <p class="class-detail"><span class="class-detail-label">Saving Throw Proficiencies:</span>
             {% for saving_throw in class_obj.saving_throw_proficiencies.all %}
             {{ saving_throw.name }}
             {% if not forloop.last %}, {% endif %}
             {% endfor %}
         </p>
-        <p>Armor Proficiencies:
+        <p class="class-detail"><span class="class-detail-label">Armor Proficiencies:</span>
             {% for armor in class_obj.armor_proficiencies.all %}
             {{ armor.name }}
             {% if not forloop.last %}, {% endif %}
             {% endfor %}
         </p>
-        <p>Weapon Proficiencies:
+        <p class="class-detail"><span class="class-detail-label">Weapon Proficiencies:</span>
             {% for weapon in class_obj.weapon_proficiencies.all %}
             {{ weapon.name }}
             {% if not forloop.last %}, {% endif %}
             {% endfor %}
         </p>
-        <p>Tool Proficiencies:
+        <p class="class-detail"><span class="class-detail-label">Tool Proficiencies:</span>
             {% for tool in class_obj.tool_proficiencies.all %}
             {{ tool.name }}
             {% if not forloop.last %}, {% endif %}
             {% endfor %}
         </p>
-        <p>Skill Proficiencies:
+        <p class="class-detail"><span class="class-detail-label">Skill Proficiencies:</span>
             {% for skill in class_obj.skill_proficiencies.all %}
             {{ skill.name }}
             {% if not forloop.last %}, {% endif %}
             {% endfor %}
         </p>
-        <p>Weapon Groups:
+        <p class="class-detail"><span class="class-detail-label">Weapon Groups:</span>
             {% for weapon_group in class_obj.weapon_groups.all %}
             {{ weapon_group.name }}
             {% if not forloop.last %}, {% endif %}
             {% endfor %}
         </p>
-        <p>Armor Groups:
+        <p class="class-detail"><span class="class-detail-label">Armor Groups:</span>
             {% for armor_group in class_obj.armor_groups.all %}
             {{ armor_group.name }}
             {% if not forloop.last %}, {% endif %}
             {% endfor %}
         </p>
-        <p>Equipment:
+        <p class="class-detail"><span class="class-detail-label">Equipment:</span>
             {% for equipment in class_obj.equipment.all %}
             {{ equipment.name }}
             {% if not forloop.last %}, {% endif %}
             {% endfor %}
         </p>
-        <p>Spellcasting Ability: {{ class_obj.spellcasting_ability }}</p>
-        <p>Traits:
+        <p class="class-detail"><span class="class-detail-label">Spellcasting Ability:</span> {{ class_obj.spellcasting_ability }}</p>
+        <p class="class-detail"><span class="class-detail-label">Traits:</span>
             {% for trait in class_obj.traits.all %}
             {{ trait.name }}
             {% if not forloop.last %}, {% endif %}

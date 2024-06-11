@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 {% endblock %}
@@ -11,25 +10,29 @@ Index - D&D Webpage
 
 {% block content %}
 <div class="container">
-    <section id="races">
+    <section class="index_section" id="races">
         <h3><a href="{% url 'races_page' %}">რასები</a></h3>
-        <div class="row">
+        <ul>
             {% for race in races %}
-            <div class="col">{{ race.name }}</div>
+            <li>
+                <a href="{% url 'race_detail' race.id %}" class="link">{{ race.name }}</a>
+            </li>
             {% endfor %}
-        </div>
+        </ul>
     </section>
 
-    <section id="classes">
+    <section class="index_section" id="classes">
         <h3><a href="{% url 'classes_page' %}">კლასები</a></h3>
-        <div class="row">
+        <ul>
             {% for class in classes %}
-            <div class="col">{{ class.name }}</div>
+            <li>
+                <a href="{% url 'class_detail' class.id %}" class="link">{{ class.name }}</a>
+            </li>
             {% endfor %}
-        </div>
+        </ul>
     </section>
 
-    <section id="spells">
+    <section class="index_section" id="spells">
         <h3><a href="{% url 'spells_page' %}">შელოცვები</a></h3>
     </section>
 </div>

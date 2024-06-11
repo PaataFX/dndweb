@@ -1,18 +1,21 @@
 {% extends 'base.html' %}
 
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
 {% block title %}
 რასები
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>რასები</h1>
+<div class="container races-container">
+    <h1 class="races-title">რასები</h1>
     {% for race in races %}
-    <div>
-        <h2><a href="{% url 'race_detail' race.id %}">{{ race.name }}</a></h2>
-        <!-- Display other race details here -->
-        <p>{{ race.description }}</p>
-        <!-- Add more fields as needed -->
+    <div class="race-item">
+        <h2 class="race-name"><a href="{% url 'race_detail' race.id %}">{{ race.name }}</a></h2>
+        <p class="race-description">{{ race.description }}</p>
     </div>
     {% endfor %}
 </div>

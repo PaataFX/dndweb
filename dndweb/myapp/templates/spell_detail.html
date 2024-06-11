@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/spells.css' %}">
+{% endblock %}
+
+{% block title %}
+{{ spell.name }} Details
+{% endblock %}
+
+{% block content %}
+<div class="container spell-detail-container">
+    <h1 class="spell-detail-title">{{ spell.name }} Details</h1>
+    <div class="spell-details">
+        <p><strong>School:</strong> {{ spell.school.name }}</p>
+        <p><strong>Casting Time:</strong> {{ spell.casting_time.name }}</p>
+        <p><strong>Range:</strong> {{ spell.range.name }}</p>
+        <p><strong>Duration:</strong> {{ spell.duration.name }}</p>
+        <p><strong>Components:</strong>
+            {% for component in spell.components.all %}
+            {{ component.name }}
+            {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p><strong>Description:</strong> {{ spell.description }}</p>
+    </div>
+</div>
+{% endblock %}
