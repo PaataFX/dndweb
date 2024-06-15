@@ -15,10 +15,14 @@ body, html {
 }
 
 .index_section{
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
     align-items: center;
-    justify-content: space-evenly;
-    
+    justify-items: center;
+    background-color: #222121;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 5px;
 }
 
 /* Links */
@@ -37,6 +41,19 @@ body, html {
     align-items: center;
     list-style: none;
     padding: 0;
+    flex-wrap: wrap;
+
+    li{
+        background-color: #1a1a1a;
+        border-radius: 8px;
+        margin: 5px;
+        padding: 3px;
+    }
+}
+
+
+#classes ul{
+    height: 130px;
 }
 
 /* List items */
